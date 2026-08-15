@@ -1,6 +1,7 @@
 export interface LanguageVariant {
     initialCode: string;
     testCode: string;
+    solutionCode?: string;
     validate?: (code: string, output: string) => true | string;
 }
 
@@ -10,6 +11,7 @@ export interface Exercise {
     description: string;
     initialCode?: string;
     testCode?: string;
+    solutionCode?: string;
     validate?: (code: string, output: string) => true | string;
     variants?: Record<string, LanguageVariant>;
 }
@@ -21,6 +23,7 @@ export function getExerciseVariant(exercise: Exercise, langId: string): Language
     return {
         initialCode: exercise.initialCode || '',
         testCode: exercise.testCode || '',
+        solutionCode: exercise.solutionCode || '',
         validate: exercise.validate,
     };
 }
@@ -53,10 +56,15 @@ export type WorkerResponse = {
     error?: string;
 };
 
+export type RunnerStatus = 'idle' | 'loading' | 'ready' | 'error';
+
 export interface CodeRunner {
     name: string;
+    getStatus?(): RunnerStatus;
     isReady(): Promise<boolean>;
+    whenReady?(): Promise<void>;
     getInitError?(): string | null;
+    subscribeStatus?(listener: (status: RunnerStatus, error?: string | null) => void): () => void;
     run(userCode: string, testCode?: string): Promise<ExecutionResult>;
     terminate?(): void;
 }
