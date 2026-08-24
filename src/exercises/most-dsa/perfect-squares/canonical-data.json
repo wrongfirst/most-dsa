@@ -1,0 +1,21 @@
+{
+  "exercise": "perfect-squares",
+  "cases": [
+    {
+      "uuid": "e0ae63e7-245f-4bc4-ae09-c340418e8410",
+      "description": "Example 1",
+      "input": {
+        "n": 13
+      },
+      "expected": 2
+    },
+    {
+      "uuid": "1b5177f1-e2b4-4aed-8d08-a77b8cac6f5e",
+      "description": "Example 2",
+      "input": {
+        "n": 6
+      },
+      "expected": 3
+    }
+  ]
+}

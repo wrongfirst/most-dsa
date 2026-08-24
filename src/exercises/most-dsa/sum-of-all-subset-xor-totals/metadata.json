@@ -1,0 +1,11 @@
+{
+  "title": "Sum of All Subsets XOR Total",
+  "slug": "sum-of-all-subset-xor-totals",
+  "difficulty": "Easy",
+  "pattern": "Backtracking",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Math", "Backtracking", "Bit Manipulation", "Combinatorics", "Enumeration"],
+  "video_id": "LI7YR-bwNYY",
+  "leetcode_url": "https://leetcode.com/problems/sum-of-all-subset-xor-totals/",
+  "neetcode_url": "https://neetcode.io/problems/sum-of-all-subset-xor-totals"
+}

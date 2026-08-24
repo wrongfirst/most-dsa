@@ -1,0 +1,21 @@
+{
+  "exercise": "unique-paths-ii",
+  "cases": [
+    {
+      "uuid": "bf19388d-4cbf-426a-a753-cd3ccf662cbe",
+      "description": "Example 1",
+      "input": {
+        "obstacleGrid": [[3, 2, 1], [1, 1, 1], [0, 0, 1]]
+      },
+      "expected": 3
+    },
+    {
+      "uuid": "7d924079-d2a6-4798-a5c0-5502ff826ebf",
+      "description": "Example 2",
+      "input": {
+        "obstacleGrid": [[0, 0, 0], [0, 0, 0], [0, 0, 1]]
+      },
+      "expected": 0
+    }
+  ]
+}

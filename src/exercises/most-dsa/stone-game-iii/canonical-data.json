@@ -1,0 +1,29 @@
+{
+  "exercise": "stone-game-iii",
+  "cases": [
+    {
+      "uuid": "68234b4b-f758-415b-b374-14b19e97631b",
+      "description": "Example 1",
+      "input": {
+        "stoneValue": [2, 4, 3, 1]
+      },
+      "expected": "Alice"
+    },
+    {
+      "uuid": "39cfc3a0-a648-45c7-9ab1-22dde5181181",
+      "description": "Example 2",
+      "input": {
+        "stoneValue": [1, 2, 1, 5]
+      },
+      "expected": "Bob"
+    },
+    {
+      "uuid": "c478899f-a493-48fa-982b-4b051667e6ea",
+      "description": "Example 3",
+      "input": {
+        "stoneValue": [5, -3, 3, 5]
+      },
+      "expected": "Tie"
+    }
+  ]
+}

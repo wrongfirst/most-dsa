@@ -1,0 +1,11 @@
+{
+  "title": "Combinations",
+  "slug": "combinations",
+  "difficulty": "Medium",
+  "pattern": "Backtracking",
+  "classifications": ["neetcode250"],
+  "topics": ["Backtracking"],
+  "video_id": "q0s6m7AiM7o",
+  "leetcode_url": "https://leetcode.com/problems/combinations/",
+  "neetcode_url": "https://neetcode.io/problems/combinations"
+}

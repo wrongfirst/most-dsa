@@ -1,0 +1,23 @@
+{
+  "exercise": "open-the-lock",
+  "cases": [
+    {
+      "uuid": "f4b75c4a-146c-4226-b222-60093bda760f",
+      "description": "Example 1",
+      "input": {
+        "deadends": ["1111", "0120", "2020", "3333"],
+        "target": "5555"
+      },
+      "expected": 20
+    },
+    {
+      "uuid": "ddfcdc57-d7eb-4e6f-af8d-3d4f78042786",
+      "description": "Example 2",
+      "input": {
+        "deadends": ["4443", "4445", "4434", "4454", "4344", "4544", "3444", "5444"],
+        "target": "4444"
+      },
+      "expected": -1
+    }
+  ]
+}

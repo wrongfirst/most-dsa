@@ -1,0 +1,11 @@
+{
+  "title": "Unique Paths II",
+  "slug": "unique-paths-ii",
+  "difficulty": "Medium",
+  "pattern": "2-D Dynamic Programming",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Dynamic Programming", "Matrix"],
+  "video_id": "d3UOz7zdE4I",
+  "leetcode_url": "https://leetcode.com/problems/unique-paths-ii/",
+  "neetcode_url": "https://neetcode.io/problems/unique-paths-ii"
+}

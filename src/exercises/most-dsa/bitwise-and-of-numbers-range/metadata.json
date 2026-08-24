@@ -1,0 +1,11 @@
+{
+  "title": "Bitwise AND of Numbers Range",
+  "slug": "bitwise-and-of-numbers-range",
+  "difficulty": "Medium",
+  "pattern": "Bit Manipulation",
+  "classifications": ["neetcode250"],
+  "topics": ["Bit Manipulation"],
+  "video_id": "R3T0olAhUq0",
+  "leetcode_url": "https://leetcode.com/problems/bitwise-and-of-numbers-range/",
+  "neetcode_url": "https://neetcode.io/problems/bitwise-and-of-numbers-range"
+}

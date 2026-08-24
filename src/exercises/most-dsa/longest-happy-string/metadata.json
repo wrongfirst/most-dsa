@@ -1,0 +1,11 @@
+{
+  "title": "Longest Happy String",
+  "slug": "longest-happy-string",
+  "difficulty": "Medium",
+  "pattern": "Heap / Priority Queue",
+  "classifications": ["neetcode250"],
+  "topics": ["String", "Greedy", "Heap (Priority Queue)"],
+  "video_id": "8u-H6O_XQKE",
+  "leetcode_url": "https://leetcode.com/problems/longest-happy-string/",
+  "neetcode_url": "https://neetcode.io/problems/longest-happy-string"
+}

@@ -1,0 +1,11 @@
+{
+  "title": "LFU Cache",
+  "slug": "lfu-cache",
+  "difficulty": "Hard",
+  "pattern": "Linked List",
+  "classifications": ["neetcode250"],
+  "topics": ["Hash Table", "Linked List", "Design", "Doubly-Linked List"],
+  "video_id": "bLEIHn-DgoA",
+  "leetcode_url": "https://leetcode.com/problems/lfu-cache/",
+  "neetcode_url": "https://neetcode.io/problems/lfu-cache"
+}

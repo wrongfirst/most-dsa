@@ -1,0 +1,119 @@
+{
+  "exercise": "construct-quad-tree",
+  "cases": [
+    {
+      "uuid": "9c727cdd-0752-46bd-9ea5-8579690696d9",
+      "description": "Example 1",
+      "input": {
+        "grid": [[0, 1], [1, 0]]
+      },
+      "expected": {
+        "val": false,
+        "isLeaf": false,
+        "topLeft": {
+          "val": false,
+          "isLeaf": true,
+          "topLeft": null,
+          "topRight": null,
+          "bottomLeft": null,
+          "bottomRight": null
+        },
+        "topRight": {
+          "val": true,
+          "isLeaf": true,
+          "topLeft": null,
+          "topRight": null,
+          "bottomLeft": null,
+          "bottomRight": null
+        },
+        "bottomLeft": {
+          "val": true,
+          "isLeaf": true,
+          "topLeft": null,
+          "topRight": null,
+          "bottomLeft": null,
+          "bottomRight": null
+        },
+        "bottomRight": {
+          "val": false,
+          "isLeaf": true,
+          "topLeft": null,
+          "topRight": null,
+          "bottomLeft": null,
+          "bottomRight": null
+        }
+      }
+    },
+    {
+      "uuid": "759cb629-4e4d-4070-8b91-19857ab80515",
+      "description": "Example 2",
+      "input": {
+        "grid": [[1, 1, 1, 1, 0, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 0, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 0], [1, 1, 1, 1, 0, 0, 0, 0]]
+      },
+      "expected": {
+        "val": false,
+        "isLeaf": false,
+        "topLeft": {
+          "val": true,
+          "isLeaf": true,
+          "topLeft": null,
+          "topRight": null,
+          "bottomLeft": null,
+          "bottomRight": null
+        },
+        "topRight": {
+          "val": false,
+          "isLeaf": false,
+          "topLeft": {
+            "val": false,
+            "isLeaf": true,
+            "topLeft": null,
+            "topRight": null,
+            "bottomLeft": null,
+            "bottomRight": null
+          },
+          "topRight": {
+            "val": false,
+            "isLeaf": true,
+            "topLeft": null,
+            "topRight": null,
+            "bottomLeft": null,
+            "bottomRight": null
+          },
+          "bottomLeft": {
+            "val": true,
+            "isLeaf": true,
+            "topLeft": null,
+            "topRight": null,
+            "bottomLeft": null,
+            "bottomRight": null
+          },
+          "bottomRight": {
+            "val": true,
+            "isLeaf": true,
+            "topLeft": null,
+            "topRight": null,
+            "bottomLeft": null,
+            "bottomRight": null
+          }
+        },
+        "bottomLeft": {
+          "val": true,
+          "isLeaf": true,
+          "topLeft": null,
+          "topRight": null,
+          "bottomLeft": null,
+          "bottomRight": null
+        },
+        "bottomRight": {
+          "val": false,
+          "isLeaf": true,
+          "topLeft": null,
+          "topRight": null,
+          "bottomLeft": null,
+          "bottomRight": null
+        }
+      }
+    }
+  ]
+}

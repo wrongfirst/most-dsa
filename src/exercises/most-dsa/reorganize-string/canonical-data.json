@@ -1,0 +1,29 @@
+{
+  "exercise": "reorganize-string",
+  "cases": [
+    {
+      "uuid": "0b4d0edb-5eac-44b5-813c-3dfd6b5c3b5b",
+      "description": "Example 1",
+      "input": {
+        "s": "axyy"
+      },
+      "expected": "yayx"
+    },
+    {
+      "uuid": "603a170e-67e8-45d7-8470-f075e7b385f3",
+      "description": "Example 2",
+      "input": {
+        "s": "abbccdd"
+      },
+      "expected": "bcbdadc"
+    },
+    {
+      "uuid": "3a4b3179-8579-41b5-b4cb-b795551b98d3",
+      "description": "Example 3",
+      "input": {
+        "s": "ccccd"
+      },
+      "expected": ""
+    }
+  ]
+}

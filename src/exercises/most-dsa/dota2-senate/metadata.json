@@ -1,0 +1,11 @@
+{
+  "title": "Dota2 Senate",
+  "slug": "dota2-senate",
+  "difficulty": "Medium",
+  "pattern": "Greedy",
+  "classifications": ["neetcode250"],
+  "topics": ["String", "Greedy", "Queue"],
+  "video_id": "zZA5KskfMuQ",
+  "leetcode_url": "https://leetcode.com/problems/dota2-senate/",
+  "neetcode_url": "https://neetcode.io/problems/dota2-senate"
+}

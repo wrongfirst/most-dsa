@@ -1,0 +1,11 @@
+{
+  "title": "Merge Sorted Array",
+  "slug": "merge-sorted-array",
+  "difficulty": "Easy",
+  "pattern": "Two Pointers",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Two Pointers", "Sorting"],
+  "video_id": "P1Ic85RarKY",
+  "leetcode_url": "https://leetcode.com/problems/merge-sorted-array/",
+  "neetcode_url": "https://neetcode.io/problems/merge-sorted-array"
+}

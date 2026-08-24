@@ -1,0 +1,29 @@
+{
+  "exercise": "binary-tree-postorder-traversal",
+  "cases": [
+    {
+      "uuid": "8babca70-48da-4fe9-b8f3-da54f0250353",
+      "description": "Example 1",
+      "input": {
+        "root": [1, 2, 3, 4, 5, 6, 7]
+      },
+      "expected": [4, 5, 2, 6, 7, 3, 1]
+    },
+    {
+      "uuid": "84677b5d-0e09-44c0-bb31-1bc7555857b8",
+      "description": "Example 2",
+      "input": {
+        "root": [1, 2, 3, null, 4, 5, null]
+      },
+      "expected": [4, 2, 5, 3, 1]
+    },
+    {
+      "uuid": "3dedd665-c69b-4998-a18a-f13d3857fa87",
+      "description": "Example 3",
+      "input": {
+        "root": []
+      },
+      "expected": []
+    }
+  ]
+}

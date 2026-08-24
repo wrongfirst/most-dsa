@@ -1,0 +1,21 @@
+{
+  "exercise": "last-stone-weight-ii",
+  "cases": [
+    {
+      "uuid": "86b1fd8d-d2a6-4b1f-8544-c32aa94a326e",
+      "description": "Example 1",
+      "input": {
+        "stones": [2, 4, 1, 5, 6, 3]
+      },
+      "expected": 1
+    },
+    {
+      "uuid": "9936239e-21e6-4034-9444-5e40aa6c65ba",
+      "description": "Example 2",
+      "input": {
+        "stones": [4, 4, 1, 7, 10]
+      },
+      "expected": 2
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "exercise": "insert-into-a-binary-search-tree",
+  "cases": [
+    {
+      "uuid": "a80c30b8-8f73-4d6b-af57-91f768910034",
+      "description": "Example 1",
+      "input": {
+        "root": [5, 3, 9, 1, 4],
+        "val": 6
+      },
+      "expected": [5, 3, 9, 1, 4, 6]
+    },
+    {
+      "uuid": "64ce903a-f88b-424e-bafc-0927c213979c",
+      "description": "Example 2",
+      "input": {
+        "root": [5, 3, 6, null, 4, null, 10, null, null, 7],
+        "val": 9
+      },
+      "expected": [5, 3, 6, null, 4, null, 10, null, null, 7, null, null, 9]
+    }
+  ]
+}

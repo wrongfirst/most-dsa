@@ -1,0 +1,23 @@
+{
+  "exercise": "partition-to-k-equal-sum-subsets",
+  "cases": [
+    {
+      "uuid": "71f68106-5b80-4f4c-abbb-f6d467c7a689",
+      "description": "Example 1",
+      "input": {
+        "nums": [2, 4, 1, 3, 5],
+        "k": 3
+      },
+      "expected": true
+    },
+    {
+      "uuid": "c993e152-c886-4c5c-8535-553b2ff25552",
+      "description": "Example 2",
+      "input": {
+        "nums": [1, 2, 3, 4],
+        "k": 3
+      },
+      "expected": false
+    }
+  ]
+}

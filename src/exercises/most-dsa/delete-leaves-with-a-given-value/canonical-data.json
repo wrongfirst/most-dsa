@@ -1,0 +1,23 @@
+{
+  "exercise": "delete-leaves-with-a-given-value",
+  "cases": [
+    {
+      "uuid": "8a92d71e-dc5f-4b56-8c3b-2e53b36b5b4f",
+      "description": "Example 1",
+      "input": {
+        "root": [1, 2, 3, 5, 2, 2, 5],
+        "target": 2
+      },
+      "expected": [1, 2, 3, 5, null, null, 5]
+    },
+    {
+      "uuid": "9941aa16-fdc5-43d8-b1f2-aa47fd2e3877",
+      "description": "Example 2",
+      "input": {
+        "root": [3, null, 3, 3],
+        "target": 3
+      },
+      "expected": true
+    }
+  ]
+}

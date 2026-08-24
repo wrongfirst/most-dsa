@@ -1,0 +1,21 @@
+{
+  "exercise": "sort-colors",
+  "cases": [
+    {
+      "uuid": "ba544391-7b5c-4756-b24d-7d6b1bceb371",
+      "description": "Example 1",
+      "input": {
+        "nums": [0, 1, 1, 2]
+      },
+      "expected": true
+    },
+    {
+      "uuid": "2c565551-44bf-48d8-a926-cc3bba4a8967",
+      "description": "Example 2",
+      "input": {
+        "nums": [0, 1, 2]
+      },
+      "expected": true
+    }
+  ]
+}

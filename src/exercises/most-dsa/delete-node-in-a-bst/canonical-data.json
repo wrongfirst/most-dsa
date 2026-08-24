@@ -1,0 +1,23 @@
+{
+  "exercise": "delete-node-in-a-bst",
+  "cases": [
+    {
+      "uuid": "a5709818-e1fc-40b8-a6d4-2e128fcce5dd",
+      "description": "Example 1",
+      "input": {
+        "root": [5, 3, 9, 1, 4],
+        "key": 3
+      },
+      "expected": [5, 4, 9, 1]
+    },
+    {
+      "uuid": "e261ef15-f582-4e98-8951-45859cd6522b",
+      "description": "Example 2",
+      "input": {
+        "root": [5, 3, 6, null, 4, null, 10, null, null, 7],
+        "key": 3
+      },
+      "expected": [5, 4, 6, null, null, null, 10, 7]
+    }
+  ]
+}

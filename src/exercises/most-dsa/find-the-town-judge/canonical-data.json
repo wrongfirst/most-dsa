@@ -1,0 +1,23 @@
+{
+  "exercise": "find-the-town-judge",
+  "cases": [
+    {
+      "uuid": "0c38165d-6844-4ac7-926a-04a65fe654b8",
+      "description": "Example 1",
+      "input": {
+        "n": 4,
+        "trust": [[1, 3], [4, 3], [2, 3]]
+      },
+      "expected": 3
+    },
+    {
+      "uuid": "71830804-d6bd-400e-a1b0-847c2d6b170a",
+      "description": "Example 2",
+      "input": {
+        "n": 3,
+        "trust": [[1, 3], [2, 3], [3, 1], [3, 2]]
+      },
+      "expected": -1
+    }
+  ]
+}

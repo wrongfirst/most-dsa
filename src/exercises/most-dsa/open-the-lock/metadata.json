@@ -1,0 +1,11 @@
+{
+  "title": "Open The Lock",
+  "slug": "open-the-lock",
+  "difficulty": "Medium",
+  "pattern": "Graphs",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Hash Table", "String", "Breadth-First Search"],
+  "video_id": "Pzg3bCDY87w",
+  "leetcode_url": "https://leetcode.com/problems/open-the-lock/",
+  "neetcode_url": "https://neetcode.io/problems/open-the-lock"
+}

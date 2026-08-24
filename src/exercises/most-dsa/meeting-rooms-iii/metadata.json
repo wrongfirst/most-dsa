@@ -1,0 +1,11 @@
+{
+  "title": "Meeting Rooms III",
+  "slug": "meeting-rooms-iii",
+  "difficulty": "Hard",
+  "pattern": "Intervals",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Hash Table", "Sorting", "Heap (Priority Queue)", "Simulation"],
+  "video_id": "2VLwjvODQbA",
+  "leetcode_url": "https://leetcode.com/problems/meeting-rooms-iii/",
+  "neetcode_url": "https://neetcode.io/problems/meeting-rooms-iii"
+}

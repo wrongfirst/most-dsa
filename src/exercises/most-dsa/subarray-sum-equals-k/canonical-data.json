@@ -1,0 +1,23 @@
+{
+  "exercise": "subarray-sum-equals-k",
+  "cases": [
+    {
+      "uuid": "e361f77c-b365-42bd-8492-c65e311dc271",
+      "description": "Example 1",
+      "input": {
+        "nums": [2, -1, 1, 2],
+        "k": 2
+      },
+      "expected": 4
+    },
+    {
+      "uuid": "23682b5a-e27a-4781-a10f-245b75a775f2",
+      "description": "Example 2",
+      "input": {
+        "nums": [4, 4, 4, 4, 4, 4],
+        "k": 4
+      },
+      "expected": 6
+    }
+  ]
+}

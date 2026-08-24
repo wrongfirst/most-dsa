@@ -1,0 +1,29 @@
+{
+  "exercise": "longest-common-prefix",
+  "cases": [
+    {
+      "uuid": "fcfb6204-1d54-400f-957c-e0e5de876d97",
+      "description": "Example 1",
+      "input": {
+        "strs": ["bat", "bag", "bank", "band"]
+      },
+      "expected": "ba"
+    },
+    {
+      "uuid": "cb56ae36-8b43-403e-96a5-4b8255dc3881",
+      "description": "Example 2",
+      "input": {
+        "strs": ["dance", "dag", "danger", "damage"]
+      },
+      "expected": "da"
+    },
+    {
+      "uuid": "4332f3cd-cdac-4cef-9622-6ec22415c6bd",
+      "description": "Example 3",
+      "input": {
+        "strs": ["neet", "feet"]
+      },
+      "expected": ""
+    }
+  ]
+}

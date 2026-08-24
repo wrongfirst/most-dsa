@@ -1,0 +1,21 @@
+{
+  "exercise": "roman-to-integer",
+  "cases": [
+    {
+      "uuid": "437f0850-27ef-4a5b-8f2c-3e3403220ffd",
+      "description": "Example 1",
+      "input": {
+        "s": "III"
+      },
+      "expected": 3
+    },
+    {
+      "uuid": "b4284f6b-d607-472e-b866-8128a080543d",
+      "description": "Example 2",
+      "input": {
+        "s": "XLIX"
+      },
+      "expected": 49
+    }
+  ]
+}

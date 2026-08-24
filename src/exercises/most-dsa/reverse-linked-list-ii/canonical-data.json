@@ -1,0 +1,25 @@
+{
+  "exercise": "reverse-linked-list-ii",
+  "cases": [
+    {
+      "uuid": "d2a97012-f01b-4902-b1b0-0735283f163d",
+      "description": "Example 1",
+      "input": {
+        "head": [1, 2, 3, 4, 5],
+        "left": 1,
+        "right": 3
+      },
+      "expected": [3, 2, 1, 4, 5]
+    },
+    {
+      "uuid": "e69ce744-72b1-4a90-9246-eb293ff97680",
+      "description": "Example 2",
+      "input": {
+        "head": [1, 1],
+        "left": 1,
+        "right": 1
+      },
+      "expected": [1, 1]
+    }
+  ]
+}

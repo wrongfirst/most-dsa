@@ -1,0 +1,11 @@
+{
+  "title": "Subarray Sum Equals K",
+  "slug": "subarray-sum-equals-k",
+  "difficulty": "Medium",
+  "pattern": "Arrays & Hashing",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Hash Table", "Prefix Sum"],
+  "video_id": "fFVZt-6sgyo",
+  "leetcode_url": "https://leetcode.com/problems/subarray-sum-equals-k/",
+  "neetcode_url": "https://neetcode.io/problems/subarray-sum-equals-k"
+}

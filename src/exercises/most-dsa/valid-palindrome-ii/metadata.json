@@ -1,0 +1,11 @@
+{
+  "title": "Valid Palindrome II",
+  "slug": "valid-palindrome-ii",
+  "difficulty": "Easy",
+  "pattern": "Two Pointers",
+  "classifications": ["neetcode250"],
+  "topics": ["Two Pointers", "String", "Greedy"],
+  "video_id": "JrxRYBwG6EI",
+  "leetcode_url": "https://leetcode.com/problems/valid-palindrome-ii/",
+  "neetcode_url": "https://neetcode.io/problems/valid-palindrome-ii"
+}

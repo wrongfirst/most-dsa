@@ -1,0 +1,13 @@
+{
+  "exercise": "design-circular-queue",
+  "cases": [
+    {
+      "uuid": "950e5fa5-c929-41da-87b3-c45fe9e3a689",
+      "description": "Example 1",
+      "input": {
+        "args": [[3], [1], [2], [3], [4], [], [], [], [4], []]
+      },
+      "expected": true
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "title": "Implement Queue using Stacks",
+  "slug": "implement-queue-using-stacks",
+  "difficulty": "Easy",
+  "pattern": "Stack",
+  "classifications": ["neetcode250"],
+  "topics": ["Stack", "Design", "Queue"],
+  "video_id": "eanwa3ht3YQ",
+  "leetcode_url": "https://leetcode.com/problems/implement-queue-using-stacks/",
+  "neetcode_url": "https://neetcode.io/problems/implement-queue-using-stacks"
+}

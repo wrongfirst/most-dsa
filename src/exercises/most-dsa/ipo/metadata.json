@@ -1,0 +1,11 @@
+{
+  "title": "IPO",
+  "slug": "ipo",
+  "difficulty": "Hard",
+  "pattern": "Heap / Priority Queue",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Greedy", "Sorting", "Heap (Priority Queue)"],
+  "video_id": "1IUzNJ6TPEM",
+  "leetcode_url": "https://leetcode.com/problems/ipo/",
+  "neetcode_url": "https://neetcode.io/problems/ipo"
+}

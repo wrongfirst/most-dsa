@@ -1,0 +1,34 @@
+impl Solution {
+    pub fn add_binary(a: String, b: String) -> String {
+        let mut res = String::new();
+        let mut carry = 0;
+
+        let a_chars: Vec<char> = a.chars().collect();
+        let b_chars: Vec<char> = b.chars().collect();
+
+        let mut i = a_chars.len() as i32 - 1;
+        let mut j = b_chars.len() as i32 - 1;
+
+        while i >= 0 || j >= 0 || carry > 0 {
+            let digit_a = if i >= 0 {
+                a_chars[i as usize].to_digit(10).unwrap() as i32
+            } else {
+                0
+            };
+            let digit_b = if j >= 0 {
+                b_chars[j as usize].to_digit(10).unwrap() as i32
+            } else {
+                0
+            };
+
+            let total = digit_a + digit_b + carry;
+            res.push(char::from_digit((total % 2) as u32, 10).unwrap());
+            carry = total / 2;
+
+            i -= 1;
+            j -= 1;
+        }
+
+        res.chars().rev().collect()
+    }
+}

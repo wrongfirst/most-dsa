@@ -1,0 +1,11 @@
+{
+  "title": "Baseball Game",
+  "slug": "baseball-game",
+  "difficulty": "Easy",
+  "pattern": "Stack",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Stack", "Simulation"],
+  "video_id": "Id_tqGdsZQI",
+  "leetcode_url": "https://leetcode.com/problems/baseball-game/",
+  "neetcode_url": "https://neetcode.io/problems/baseball-game"
+}

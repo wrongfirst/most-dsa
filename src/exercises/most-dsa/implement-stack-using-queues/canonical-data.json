@@ -1,0 +1,13 @@
+{
+  "exercise": "implement-stack-using-queues",
+  "cases": [
+    {
+      "uuid": "a7f4d6e5-65fe-4608-9648-ff417b3abb73",
+      "description": "Example 1",
+      "input": {
+        "args": [[], [1], [2], [], [], []]
+      },
+      "expected": true
+    }
+  ]
+}

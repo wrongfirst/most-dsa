@@ -1,0 +1,11 @@
+{
+  "title": "Last Stone Weight II",
+  "slug": "last-stone-weight-ii",
+  "difficulty": "Medium",
+  "pattern": "2-D Dynamic Programming",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Dynamic Programming"],
+  "video_id": "gdXkkmzvR3c",
+  "leetcode_url": "https://leetcode.com/problems/last-stone-weight-ii/",
+  "neetcode_url": "https://neetcode.io/problems/last-stone-weight-ii"
+}

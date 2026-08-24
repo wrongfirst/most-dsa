@@ -1,0 +1,11 @@
+{
+  "title": "Excel Sheet Column Title",
+  "slug": "excel-sheet-column-title",
+  "difficulty": "Easy",
+  "pattern": "Math & Geometry",
+  "classifications": ["neetcode250"],
+  "topics": ["Math", "String"],
+  "video_id": "X_vJDpCCuoA",
+  "leetcode_url": "https://leetcode.com/problems/excel-sheet-column-title/",
+  "neetcode_url": "https://neetcode.io/problems/excel-sheet-column-title"
+}

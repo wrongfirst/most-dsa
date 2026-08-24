@@ -1,0 +1,11 @@
+{
+  "title": "Path with Minimum Effort",
+  "slug": "path-with-minimum-effort",
+  "difficulty": "Medium",
+  "pattern": "Advanced Graphs",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Binary Search", "Depth-First Search", "Breadth-First Search", "Union Find", "Heap (Priority Queue)", "Matrix"],
+  "video_id": "XQlxCCx2vI4",
+  "leetcode_url": "https://leetcode.com/problems/path-with-minimum-effort/",
+  "neetcode_url": "https://neetcode.io/problems/path-with-minimum-effort"
+}

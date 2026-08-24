@@ -1,0 +1,23 @@
+{
+  "exercise": "verifying-an-alien-dictionary",
+  "cases": [
+    {
+      "uuid": "3d3ad684-f94f-4f7e-908c-e9d34b998627",
+      "description": "Example 1",
+      "input": {
+        "words": ["dag", "disk", "dog"],
+        "order": "hlabcdefgijkmnopqrstuvwxyz"
+      },
+      "expected": true
+    },
+    {
+      "uuid": "8c3d62ed-3152-4d8f-b3a7-b9c1e3fc2323",
+      "description": "Example 2",
+      "input": {
+        "words": ["neetcode", "neet"],
+        "order": "worldabcefghijkmnpqstuvxyz"
+      },
+      "expected": false
+    }
+  ]
+}

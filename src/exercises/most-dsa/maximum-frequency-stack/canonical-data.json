@@ -1,0 +1,13 @@
+{
+  "exercise": "maximum-frequency-stack",
+  "cases": [
+    {
+      "uuid": "92c1dc96-ef73-4ace-bdfa-95b5cd4c5577",
+      "description": "Example 1",
+      "input": {
+        "args": [[], [5], [7], [5], [7], [4], [5], [], [], [], []]
+      },
+      "expected": true
+    }
+  ]
+}

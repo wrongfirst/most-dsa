@@ -1,0 +1,11 @@
+{
+  "title": "Stone Game II",
+  "slug": "stone-game-ii",
+  "difficulty": "Medium",
+  "pattern": "2-D Dynamic Programming",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Math", "Dynamic Programming", "Prefix Sum", "Game Theory"],
+  "video_id": "I-z-u0zfQtg",
+  "leetcode_url": "https://leetcode.com/problems/stone-game-ii/",
+  "neetcode_url": "https://neetcode.io/problems/stone-game-ii"
+}

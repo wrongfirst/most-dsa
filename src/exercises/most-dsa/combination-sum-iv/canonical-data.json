@@ -1,0 +1,23 @@
+{
+  "exercise": "combination-sum-iv",
+  "cases": [
+    {
+      "uuid": "2faf89b8-636f-4349-9b86-0b6d5ae10031",
+      "description": "Example 1",
+      "input": {
+        "nums": [1, 2, 3],
+        "target": 4
+      },
+      "expected": 7
+    },
+    {
+      "uuid": "22018542-ae2a-4f23-910d-4b2ec04cdaf5",
+      "description": "Example 2",
+      "input": {
+        "nums": [1],
+        "target": 3
+      },
+      "expected": 1
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "exercise": "search-insert-position",
+  "cases": [
+    {
+      "uuid": "0cb39401-fa95-4820-b88e-0855e0cc0c1c",
+      "description": "Example 1",
+      "input": {
+        "nums": [-1, 0, 2, 4, 6, 8],
+        "target": 5
+      },
+      "expected": 4
+    },
+    {
+      "uuid": "4180c201-46c1-47e1-ade9-db68b43b46fd",
+      "description": "Example 2",
+      "input": {
+        "nums": [-1, 0, 2, 4, 6, 8],
+        "target": 10
+      },
+      "expected": 6
+    }
+  ]
+}

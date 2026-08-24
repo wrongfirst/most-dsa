@@ -1,0 +1,11 @@
+{
+  "title": "Insert into a Binary Search Tree",
+  "slug": "insert-into-a-binary-search-tree",
+  "difficulty": "Medium",
+  "pattern": "Trees",
+  "classifications": ["neetcode250"],
+  "topics": ["Tree", "Binary Search Tree", "Binary Tree"],
+  "video_id": "Cpg8f79luEA",
+  "leetcode_url": "https://leetcode.com/problems/insert-into-a-binary-search-tree/",
+  "neetcode_url": "https://neetcode.io/problems/insert-into-a-binary-search-tree"
+}

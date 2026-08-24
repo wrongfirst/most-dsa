@@ -1,0 +1,32 @@
+{
+  "exercise": "word-break-ii",
+  "cases": [
+    {
+      "uuid": "695f8855-8f83-4aa5-8bad-c1226c81b58c",
+      "description": "Example 1",
+      "input": {
+        "s": "neetcode",
+        "wordDict": ["neet", "code"]
+      },
+      "expected": ["neet code"]
+    },
+    {
+      "uuid": "2d85eb5d-55b3-4e38-993b-c6ecbee7f0dd",
+      "description": "Example 2",
+      "input": {
+        "s": "racecariscar",
+        "wordDict": ["racecar", "race", "car", "is"]
+      },
+      "expected": ["racecar is car", "race car is car"]
+    },
+    {
+      "uuid": "1fe859f2-2310-4523-9dc2-92e21df81ba9",
+      "description": "Example 3",
+      "input": {
+        "s": "catsincars",
+        "wordDict": ["cats", "cat", "sin", "in", "car"]
+      },
+      "expected": []
+    }
+  ]
+}

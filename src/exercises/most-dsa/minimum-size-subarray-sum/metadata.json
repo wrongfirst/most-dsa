@@ -1,0 +1,11 @@
+{
+  "title": "Minimum Size Subarray Sum",
+  "slug": "minimum-size-subarray-sum",
+  "difficulty": "Medium",
+  "pattern": "Sliding Window",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Binary Search", "Sliding Window", "Prefix Sum"],
+  "video_id": "aYqYMIqZx5s",
+  "leetcode_url": "https://leetcode.com/problems/minimum-size-subarray-sum/",
+  "neetcode_url": "https://neetcode.io/problems/minimum-size-subarray-sum"
+}

@@ -1,0 +1,11 @@
+{
+  "title": "4Sum",
+  "slug": "4sum",
+  "difficulty": "Medium",
+  "pattern": "Two Pointers",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Two Pointers", "Sorting"],
+  "video_id": "EYeR-_1NRlQ",
+  "leetcode_url": "https://leetcode.com/problems/4sum/",
+  "neetcode_url": "https://neetcode.io/problems/4sum"
+}

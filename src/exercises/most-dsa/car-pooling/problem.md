@@ -1,0 +1,37 @@
+There is a car with `capacity` empty seats. The vehicle only drives east (i.e., it cannot turn around and drive west).
+
+You are given the integer `capacity` and a integer array `trips` where `trips[i] = [numPassengers[i], from[i], to[i]]` indicates that the `ith` trip has `numPassengers[i]` passengers and the locations to pick them up and drop them off are `from[i]` and `to[i]` respectively. The locations are given as the number of kilometers due east from the car's initial location.
+
+Return `true` if it is possible to pick up and drop off all passengers for all the given trips, or `false` otherwise.
+
+<br>
+
+**Example 1:**
+
+```java
+Input: trips = [[4,1,2],[3,2,4]], capacity = 4
+
+Output: true
+```
+
+<br>
+
+**Example 2:**
+
+```java
+Input: trips = [[2,1,3],[3,2,4]], capacity = 4
+
+Output: false
+```
+
+<br>
+
+**Constraints:**
+* `1 <= trips.length <= 1000`
+* `trips[i].length == 3`
+* `1 <= numPassengers[i] <= 100`
+* `0 <= from[i] < to[i] <= 1000`
+* `1 <= capacity <= 100,000`
+
+
+<br>

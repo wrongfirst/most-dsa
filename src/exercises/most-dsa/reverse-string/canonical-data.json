@@ -1,0 +1,21 @@
+{
+  "exercise": "reverse-string",
+  "cases": [
+    {
+      "uuid": "4ccd6048-b0f3-40a0-a58c-8a89203bff0f",
+      "description": "Example 1",
+      "input": {
+        "s": ["t", "e", "e", "n"]
+      },
+      "expected": true
+    },
+    {
+      "uuid": "77b24374-2f34-4c42-a30b-1f46580f0b94",
+      "description": "Example 2",
+      "input": {
+        "s": ["r", "a", "c", "e", "c", "a", "r"]
+      },
+      "expected": true
+    }
+  ]
+}

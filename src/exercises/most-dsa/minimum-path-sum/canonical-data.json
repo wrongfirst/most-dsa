@@ -1,0 +1,21 @@
+{
+  "exercise": "minimum-path-sum",
+  "cases": [
+    {
+      "uuid": "649190c5-27a4-43c9-ada3-50c1aed18eca",
+      "description": "Example 1",
+      "input": {
+        "grid": [[1, 2, 0], [5, 4, 2], [1, 1, 3]]
+      },
+      "expected": 8
+    },
+    {
+      "uuid": "a869a97c-3296-4523-9cf1-37e9878979e0",
+      "description": "Example 2",
+      "input": {
+        "grid": [[2, 2], [1, 0]]
+      },
+      "expected": 3
+    }
+  ]
+}

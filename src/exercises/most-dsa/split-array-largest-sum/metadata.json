@@ -1,0 +1,11 @@
+{
+  "title": "Split Array Largest Sum",
+  "slug": "split-array-largest-sum",
+  "difficulty": "Hard",
+  "pattern": "Binary Search",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Binary Search", "Dynamic Programming", "Greedy", "Prefix Sum"],
+  "video_id": "YUF3_eBdzsk",
+  "leetcode_url": "https://leetcode.com/problems/split-array-largest-sum/",
+  "neetcode_url": "https://neetcode.io/problems/split-array-largest-sum"
+}

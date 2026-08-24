@@ -1,0 +1,21 @@
+{
+  "exercise": "stone-game-ii",
+  "cases": [
+    {
+      "uuid": "ca8c81e6-df1e-41f2-a330-d07559c21faa",
+      "description": "Example 1",
+      "input": {
+        "piles": [3, 1, 2, 5, 7]
+      },
+      "expected": 10
+    },
+    {
+      "uuid": "fd852de9-8e97-452f-b948-ea72b7877d4b",
+      "description": "Example 2",
+      "input": {
+        "piles": [4, 3, 2, 5, 10]
+      },
+      "expected": 11
+    }
+  ]
+}

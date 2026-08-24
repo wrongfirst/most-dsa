@@ -1,0 +1,23 @@
+{
+  "exercise": "find-in-mountain-array",
+  "cases": [
+    {
+      "uuid": "b44c4f5a-808d-4e6e-bfde-6a113067c143",
+      "description": "Example 1",
+      "input": {
+        "mountainArr": [2, 4, 5, 2, 1],
+        "target": 2
+      },
+      "expected": true
+    },
+    {
+      "uuid": "82e2ca4d-d851-422c-ab97-e17348a07830",
+      "description": "Example 2",
+      "input": {
+        "mountainArr": [1, 2, 3, 4, 2, 1],
+        "target": 6
+      },
+      "expected": true
+    }
+  ]
+}

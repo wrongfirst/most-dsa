@@ -1,0 +1,21 @@
+{
+  "exercise": "lemonade-change",
+  "cases": [
+    {
+      "uuid": "533bd1b2-cd44-47f4-bc3c-f16cfa3fba02",
+      "description": "Example 1",
+      "input": {
+        "bills": [5, 10, 5, 5, 20]
+      },
+      "expected": true
+    },
+    {
+      "uuid": "36c2b9c3-f6ae-40c1-8696-63c79977efa0",
+      "description": "Example 2",
+      "input": {
+        "bills": [5, 20, 10, 5]
+      },
+      "expected": false
+    }
+  ]
+}

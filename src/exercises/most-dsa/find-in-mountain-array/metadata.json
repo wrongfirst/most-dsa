@@ -1,0 +1,11 @@
+{
+  "title": "Find in Mountain Array",
+  "slug": "find-in-mountain-array",
+  "difficulty": "Hard",
+  "pattern": "Binary Search",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Binary Search", "Interactive"],
+  "video_id": "BGgYC-YkGvc",
+  "leetcode_url": "https://leetcode.com/problems/find-in-mountain-array/",
+  "neetcode_url": "https://neetcode.io/problems/find-in-mountain-array"
+}

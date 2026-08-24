@@ -1,0 +1,23 @@
+{
+  "exercise": "minimum-size-subarray-sum",
+  "cases": [
+    {
+      "uuid": "6957f46a-d97b-40d0-b6e0-6bee8775da0b",
+      "description": "Example 1",
+      "input": {
+        "target": 10,
+        "nums": [2, 1, 5, 1, 5, 3]
+      },
+      "expected": 3
+    },
+    {
+      "uuid": "4690591d-3331-4300-9d51-c377ce3c8d83",
+      "description": "Example 2",
+      "input": {
+        "target": 5,
+        "nums": [1, 2, 1]
+      },
+      "expected": 0
+    }
+  ]
+}

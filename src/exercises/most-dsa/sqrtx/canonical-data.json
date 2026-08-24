@@ -1,0 +1,21 @@
+{
+  "exercise": "sqrtx",
+  "cases": [
+    {
+      "uuid": "4f459e8f-add3-4761-b0f2-3b150afc83be",
+      "description": "Example 1",
+      "input": {
+        "x": 9
+      },
+      "expected": 3
+    },
+    {
+      "uuid": "bf3853ca-35ba-4a0f-8cea-87f992de2f1a",
+      "description": "Example 2",
+      "input": {
+        "x": 13
+      },
+      "expected": 3
+    }
+  ]
+}

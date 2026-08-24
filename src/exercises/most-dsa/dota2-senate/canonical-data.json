@@ -1,0 +1,21 @@
+{
+  "exercise": "dota2-senate",
+  "cases": [
+    {
+      "uuid": "3b7139c1-956e-4fcd-8fed-aa7f44a71015",
+      "description": "Example 1",
+      "input": {
+        "senate": "RRDDD"
+      },
+      "expected": "Radiant"
+    },
+    {
+      "uuid": "f56bc120-3f21-429b-9022-b20e258a172e",
+      "description": "Example 2",
+      "input": {
+        "senate": "RD"
+      },
+      "expected": "Radiant"
+    }
+  ]
+}

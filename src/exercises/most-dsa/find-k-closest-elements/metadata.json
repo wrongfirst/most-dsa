@@ -1,0 +1,11 @@
+{
+  "title": "Find K Closest Elements",
+  "slug": "find-k-closest-elements",
+  "difficulty": "Medium",
+  "pattern": "Sliding Window",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Two Pointers", "Binary Search", "Sliding Window", "Sorting", "Heap (Priority Queue)"],
+  "video_id": "o-YDQzHoaKM",
+  "leetcode_url": "https://leetcode.com/problems/find-k-closest-elements/",
+  "neetcode_url": "https://neetcode.io/problems/find-k-closest-elements"
+}

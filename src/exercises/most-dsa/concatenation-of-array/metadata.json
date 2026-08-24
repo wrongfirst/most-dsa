@@ -1,0 +1,11 @@
+{
+  "title": "Concatenation of Array",
+  "slug": "concatenation-of-array",
+  "difficulty": "Easy",
+  "pattern": "Arrays & Hashing",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Simulation"],
+  "video_id": "68isPRHgcFQ",
+  "leetcode_url": "https://leetcode.com/problems/concatenation-of-array/",
+  "neetcode_url": "https://neetcode.io/problems/concatenation-of-array"
+}

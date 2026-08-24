@@ -1,0 +1,13 @@
+{
+  "exercise": "online-stock-span",
+  "cases": [
+    {
+      "uuid": "94ac72f7-bbc2-4ddc-b9ce-eae10917b95e",
+      "description": "Example 1",
+      "input": {
+        "args": [[], [100], [80], [60], [70], [60], [75], [85]]
+      },
+      "expected": true
+    }
+  ]
+}

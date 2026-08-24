@@ -1,0 +1,25 @@
+{
+  "exercise": "find-k-closest-elements",
+  "cases": [
+    {
+      "uuid": "c0b892c0-26b9-48ee-82e2-9cb1af5b49f7",
+      "description": "Example 1",
+      "input": {
+        "arr": [2, 4, 5, 8],
+        "k": 2,
+        "x": 6
+      },
+      "expected": [4, 5]
+    },
+    {
+      "uuid": "d0724670-ca0a-469e-8faf-fd30369d823b",
+      "description": "Example 2",
+      "input": {
+        "arr": [2, 3, 4],
+        "k": 3,
+        "x": 1
+      },
+      "expected": [2, 3, 4]
+    }
+  ]
+}

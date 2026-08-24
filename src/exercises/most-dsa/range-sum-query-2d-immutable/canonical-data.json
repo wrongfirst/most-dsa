@@ -1,0 +1,13 @@
+{
+  "exercise": "range-sum-query-2d-immutable",
+  "cases": [
+    {
+      "uuid": "7bb205fc-5173-4500-97d4-b89d114b7214",
+      "description": "Example 1",
+      "input": {
+        "args": [[[[3, 0, 1, 4, 2], [5, 6, 3, 2, 1], [1, 2, 0, 1, 5], [4, 1, 0, 1, 7], [1, 0, 3, 0, 5]]], [2, 1, 4, 3], [1, 1, 2, 2], [1, 2, 2, 4]]
+      },
+      "expected": true
+    }
+  ]
+}

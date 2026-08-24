@@ -1,0 +1,21 @@
+{
+  "exercise": "greatest-common-divisor-traversal",
+  "cases": [
+    {
+      "uuid": "cf98c388-196c-41e6-a65a-d1fc36a20941",
+      "description": "Example 1",
+      "input": {
+        "nums": [4, 3, 12]
+      },
+      "expected": true
+    },
+    {
+      "uuid": "a955aaa2-bf66-48ed-bd1b-13be5b984e37",
+      "description": "Example 2",
+      "input": {
+        "nums": [2, 3, 7]
+      },
+      "expected": false
+    }
+  ]
+}

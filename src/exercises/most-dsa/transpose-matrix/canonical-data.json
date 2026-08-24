@@ -1,0 +1,21 @@
+{
+  "exercise": "transpose-matrix",
+  "cases": [
+    {
+      "uuid": "92285d64-037f-4c80-9ff7-530813c3cefd",
+      "description": "Example 1",
+      "input": {
+        "matrix": [[2, -1], [1, 3]]
+      },
+      "expected": [[2, -1], [1, 3]]
+    },
+    {
+      "uuid": "9ab7470b-9661-41c0-9bcf-e78da3be6d50",
+      "description": "Example 2",
+      "input": {
+        "matrix": [[1, 0, 5], [2, 4, 3]]
+      },
+      "expected": [[1, 2], [0, 4], [5, 3]]
+    }
+  ]
+}

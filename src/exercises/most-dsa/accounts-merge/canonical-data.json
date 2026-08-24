@@ -1,0 +1,21 @@
+{
+  "exercise": "accounts-merge",
+  "cases": [
+    {
+      "uuid": "e3d80b5e-0033-44b2-9e69-cac551f99dc3",
+      "description": "Example 1",
+      "input": {
+        "accounts": [["neet", "neet@gmail.com", "neet_dsa@gmail.com"], ["alice", "alice@gmail.com"], ["neet", "bob@gmail.com", "neet@gmail.com"], ["neet", "neetcode@gmail.com"]]
+      },
+      "expected": [["neet", "bob@gmail.com", "neet@gmail.com", "neet_dsa@gmail.com"], ["alice", "alice@gmail.com"], ["neet", "neetcode@gmail.com"]]
+    },
+    {
+      "uuid": "6053333b-e439-4aaf-b864-de61c4d4cffa",
+      "description": "Example 2",
+      "input": {
+        "accounts": [["James", "james@mail.com"], ["James", "james@mail.co"]]
+      },
+      "expected": [["James", "james@mail.com"], ["James", "james@mail.co"]]
+    }
+  ]
+}

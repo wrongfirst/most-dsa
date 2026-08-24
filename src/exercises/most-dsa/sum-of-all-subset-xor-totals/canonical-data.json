@@ -1,0 +1,21 @@
+{
+  "exercise": "sum-of-all-subset-xor-totals",
+  "cases": [
+    {
+      "uuid": "ea68f1d7-8a30-4290-8675-0662761d33bf",
+      "description": "Example 1",
+      "input": {
+        "nums": [2, 4]
+      },
+      "expected": 12
+    },
+    {
+      "uuid": "2f64f8ec-a3a0-41d2-a195-c549b65dab31",
+      "description": "Example 2",
+      "input": {
+        "nums": [3, 1, 1]
+      },
+      "expected": 12
+    }
+  ]
+}

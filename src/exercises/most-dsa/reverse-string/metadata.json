@@ -1,0 +1,11 @@
+{
+  "title": "Reverse String",
+  "slug": "reverse-string",
+  "difficulty": "Easy",
+  "pattern": "Two Pointers",
+  "classifications": ["neetcode250"],
+  "topics": ["Two Pointers", "String"],
+  "video_id": "_d0T_2Lk2qA",
+  "leetcode_url": "https://leetcode.com/problems/reverse-string/",
+  "neetcode_url": "https://neetcode.io/problems/reverse-string"
+}

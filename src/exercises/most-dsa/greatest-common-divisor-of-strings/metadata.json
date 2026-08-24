@@ -1,0 +1,11 @@
+{
+  "title": "Greatest Common Divisor of Strings",
+  "slug": "greatest-common-divisor-of-strings",
+  "difficulty": "Easy",
+  "pattern": "Math & Geometry",
+  "classifications": ["neetcode250"],
+  "topics": ["Math", "String"],
+  "video_id": "i5I_wrbUdzM",
+  "leetcode_url": "https://leetcode.com/problems/greatest-common-divisor-of-strings/",
+  "neetcode_url": "https://neetcode.io/problems/greatest-common-divisor-of-strings"
+}

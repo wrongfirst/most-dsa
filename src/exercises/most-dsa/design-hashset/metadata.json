@@ -1,0 +1,11 @@
+{
+  "title": "Design HashSet",
+  "slug": "design-hashset",
+  "difficulty": "Easy",
+  "pattern": "Arrays & Hashing",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Hash Table", "Linked List", "Design", "Hash Function"],
+  "video_id": "VymjPQUXjL8",
+  "leetcode_url": "https://leetcode.com/problems/design-hashset/",
+  "neetcode_url": "https://neetcode.io/problems/design-hashset"
+}

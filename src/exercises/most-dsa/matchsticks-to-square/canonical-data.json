@@ -1,0 +1,21 @@
+{
+  "exercise": "matchsticks-to-square",
+  "cases": [
+    {
+      "uuid": "396c3c63-8266-48b1-9da6-1b4649e98203",
+      "description": "Example 1",
+      "input": {
+        "matchsticks": [4, 4, 3, 2, 2, 1]
+      },
+      "expected": true
+    },
+    {
+      "uuid": "9b9f0167-5aac-4ca2-88fb-7d8e8491adab",
+      "description": "Example 2",
+      "input": {
+        "matchsticks": [1, 5, 6, 3]
+      },
+      "expected": false
+    }
+  ]
+}

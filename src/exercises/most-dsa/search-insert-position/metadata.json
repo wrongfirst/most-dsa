@@ -1,0 +1,11 @@
+{
+  "title": "Search Insert Position",
+  "slug": "search-insert-position",
+  "difficulty": "Easy",
+  "pattern": "Binary Search",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Binary Search"],
+  "video_id": "K-RYzDZkzCI",
+  "leetcode_url": "https://leetcode.com/problems/search-insert-position/",
+  "neetcode_url": "https://neetcode.io/problems/search-insert-position"
+}

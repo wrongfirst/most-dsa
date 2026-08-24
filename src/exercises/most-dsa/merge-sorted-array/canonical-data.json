@@ -1,0 +1,27 @@
+{
+  "exercise": "merge-sorted-array",
+  "cases": [
+    {
+      "uuid": "b8543ab3-9922-4d87-a4c9-cafc72f40d06",
+      "description": "Example 1",
+      "input": {
+        "nums1": [1, 2, 10, 20, 20, 40],
+        "m": 4,
+        "nums2": [1, 2],
+        "n": 2
+      },
+      "expected": true
+    },
+    {
+      "uuid": "ccc551ab-180e-4fc7-b7a4-1e33892d7f67",
+      "description": "Example 2",
+      "input": {
+        "nums1": [1, 2],
+        "m": 0,
+        "nums2": [1, 2],
+        "n": 2
+      },
+      "expected": true
+    }
+  ]
+}

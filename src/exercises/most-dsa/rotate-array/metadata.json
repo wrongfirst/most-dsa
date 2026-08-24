@@ -1,0 +1,11 @@
+{
+  "title": "Rotate Array",
+  "slug": "rotate-array",
+  "difficulty": "Medium",
+  "pattern": "Two Pointers",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Math", "Two Pointers"],
+  "video_id": "BHr381Guz3Y",
+  "leetcode_url": "https://leetcode.com/problems/rotate-array/",
+  "neetcode_url": "https://neetcode.io/problems/rotate-array"
+}

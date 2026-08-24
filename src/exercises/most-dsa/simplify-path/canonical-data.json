@@ -1,0 +1,29 @@
+{
+  "exercise": "simplify-path",
+  "cases": [
+    {
+      "uuid": "8a262d21-8f3c-4ef0-8069-2cbda6eb08f0",
+      "description": "Example 1",
+      "input": {
+        "path": "/neetcode/practice//...///../courses"
+      },
+      "expected": "/neetcode/practice/courses"
+    },
+    {
+      "uuid": "f30a3f9a-22f0-4f82-aa61-c70022a9b5ee",
+      "description": "Example 2",
+      "input": {
+        "path": "/..//"
+      },
+      "expected": "/"
+    },
+    {
+      "uuid": "34e64a4c-2f5a-433d-834c-5e6953ef6821",
+      "description": "Example 3",
+      "input": {
+        "path": "/..//_home/a/b/..///"
+      },
+      "expected": "/_home/a"
+    }
+  ]
+}

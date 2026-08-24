@@ -1,0 +1,11 @@
+{
+  "title": "Build a Matrix With Conditions",
+  "slug": "build-a-matrix-with-conditions",
+  "difficulty": "Hard",
+  "pattern": "Advanced Graphs",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Graph Theory", "Topological Sort", "Matrix"],
+  "video_id": "khTKB1PzCuw",
+  "leetcode_url": "https://leetcode.com/problems/build-a-matrix-with-conditions/",
+  "neetcode_url": "https://neetcode.io/problems/build-a-matrix-with-conditions"
+}

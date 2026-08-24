@@ -1,0 +1,21 @@
+{
+  "exercise": "concatenation-of-array",
+  "cases": [
+    {
+      "uuid": "e2e3dc94-11a8-4a00-b671-1504769f7ded",
+      "description": "Example 1",
+      "input": {
+        "nums": [1, 4, 1, 2]
+      },
+      "expected": [1, 4, 1, 2, 1, 4, 1, 2]
+    },
+    {
+      "uuid": "9ceb9161-bc32-43ed-951d-f456ce5f9d77",
+      "description": "Example 2",
+      "input": {
+        "nums": [22, 21, 20, 1]
+      },
+      "expected": [22, 21, 20, 1, 22, 21, 20, 1]
+    }
+  ]
+}

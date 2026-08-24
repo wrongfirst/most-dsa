@@ -1,0 +1,29 @@
+{
+  "exercise": "asteroid-collision",
+  "cases": [
+    {
+      "uuid": "47211948-3875-40a3-9aa1-7aa54d2bddf5",
+      "description": "Example 1",
+      "input": {
+        "asteroids": [2, 4, -4, -1]
+      },
+      "expected": [2]
+    },
+    {
+      "uuid": "68ecc111-3a6e-4c7d-8a6a-98e268a1d05b",
+      "description": "Example 2",
+      "input": {
+        "asteroids": [5, 5]
+      },
+      "expected": [5, 5]
+    },
+    {
+      "uuid": "06b8858e-25f6-4ede-8e9a-b4182d21fed3",
+      "description": "Example 3",
+      "input": {
+        "asteroids": [7, 9, 9]
+      },
+      "expected": [7, 9]
+    }
+  ]
+}

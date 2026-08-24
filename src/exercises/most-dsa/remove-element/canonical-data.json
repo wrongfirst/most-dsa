@@ -1,0 +1,23 @@
+{
+  "exercise": "remove-element",
+  "cases": [
+    {
+      "uuid": "ccfa575a-04dd-440d-bb7e-cee0a89ac3b9",
+      "description": "Example 1",
+      "input": {
+        "nums": [2, 2, 2, 3],
+        "val": 3
+      },
+      "expected": 2
+    },
+    {
+      "uuid": "fc4fd721-6c46-434b-980b-2e6842b6fb0b",
+      "description": "Example 2",
+      "input": {
+        "nums": [0, 1, 4, 0, 3, 0, 4, 2],
+        "val": 2
+      },
+      "expected": 5
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "title": "Remove Duplicates From Sorted Array",
+  "slug": "remove-duplicates-from-sorted-array",
+  "difficulty": "Easy",
+  "pattern": "Two Pointers",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Two Pointers"],
+  "video_id": "DEJAZBq0FDA",
+  "leetcode_url": "https://leetcode.com/problems/remove-duplicates-from-sorted-array/",
+  "neetcode_url": "https://neetcode.io/problems/remove-duplicates-from-sorted-array"
+}

@@ -1,0 +1,21 @@
+{
+  "exercise": "excel-sheet-column-title",
+  "cases": [
+    {
+      "uuid": "e210dde8-8060-4864-8a06-f9cad2b2da58",
+      "description": "Example 1",
+      "input": {
+        "columnNumber": 32
+      },
+      "expected": "AF"
+    },
+    {
+      "uuid": "7668dd7e-365d-48e5-b710-7ab0eb2ca980",
+      "description": "Example 2",
+      "input": {
+        "columnNumber": 53
+      },
+      "expected": "BA"
+    }
+  ]
+}

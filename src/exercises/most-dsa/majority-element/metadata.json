@@ -1,0 +1,11 @@
+{
+  "title": "Majority Element",
+  "slug": "majority-element",
+  "difficulty": "Easy",
+  "pattern": "Arrays & Hashing",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Hash Table", "Divide and Conquer", "Sorting", "Counting"],
+  "video_id": "7pnhv842keE",
+  "leetcode_url": "https://leetcode.com/problems/majority-element/",
+  "neetcode_url": "https://neetcode.io/problems/majority-element"
+}

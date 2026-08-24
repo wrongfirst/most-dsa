@@ -1,0 +1,11 @@
+{
+  "title": "Stone Game III",
+  "slug": "stone-game-iii",
+  "difficulty": "Hard",
+  "pattern": "1-D Dynamic Programming",
+  "classifications": ["neetcode250"],
+  "topics": ["Array", "Math", "Dynamic Programming", "Game Theory"],
+  "video_id": "HsLG5QW9CFQ",
+  "leetcode_url": "https://leetcode.com/problems/stone-game-iii/",
+  "neetcode_url": "https://neetcode.io/problems/stone-game-iii"
+}

@@ -1,0 +1,23 @@
+{
+  "exercise": "4sum",
+  "cases": [
+    {
+      "uuid": "f0fc7f5d-c79b-4e41-8f9c-5db2e21a517b",
+      "description": "Example 1",
+      "input": {
+        "nums": [-3, 0, 1, 2, 3, 3],
+        "target": 3
+      },
+      "expected": [[-3, 0, 3, 3], [-3, 1, 2, 3]]
+    },
+    {
+      "uuid": "69d3f05f-29c2-4fc8-8f82-a9e72f089b8a",
+      "description": "Example 2",
+      "input": {
+        "nums": [-1, -1, -1, 1, 1, 1],
+        "target": 2
+      },
+      "expected": [[-1, 1, 1, 1]]
+    }
+  ]
+}
