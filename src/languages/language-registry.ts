@@ -1,7 +1,8 @@
-import siteConfig from '../../site.toml';
+import { siteConfig } from '../core/siteConfig';
 import type { Extension } from '@codemirror/state';
 import type { CodeRunner } from '../core/types';
 import type { LanguageMetadata } from './types';
+import { createLanguageLinter } from './lint-helper';
 
 // Discover metadata and syntax extensions synchronously for immediate UI rendering
 const metadataModules = import.meta.glob<{ metadata?: LanguageMetadata; default?: LanguageMetadata }>(
@@ -14,14 +15,20 @@ const adapterModules = import.meta.glob<{ runner?: CodeRunner; default?: CodeRun
   './*/adapter.ts'
 );
 
-const syntaxModules = import.meta.glob<{ syntaxExtension?: Extension; default?: Extension }>(
+const syntaxModules = import.meta.glob<{ syntaxExtension?: Extension; lintExtension?: Extension; default?: Extension }>(
   './*/syntax.ts',
   { eager: true }
 );
 
-// Maps for metadata and syntax
+const linterModules = import.meta.glob<{ lintExtension?: Extension; default?: Extension }>(
+  './*/linter.ts',
+  { eager: true }
+);
+
+// Maps for metadata, syntax, and linters
 const metadataMap = new Map<string, LanguageMetadata>();
 const syntaxMap = new Map<string, Extension>();
+const linterMap = new Map<string, Extension>();
 
 for (const path in metadataModules) {
   const match = path.match(/\.\/([^/]+)\/metadata\.ts$/);
@@ -41,24 +48,28 @@ for (const path in metadataModules) {
   if (syntax) {
     syntaxMap.set(langId, syntax);
   }
+
+  const linterPath = `./${langId}/linter.ts`;
+  const linterMod = linterModules[linterPath];
+  const linter = linterMod ? (linterMod.lintExtension || linterMod.default) : undefined;
+  if (linter) {
+    linterMap.set(langId, linter);
+  }
 }
 
 // Extract site config for enabled languages & default language
-const configAny = siteConfig as any;
+const config = siteConfig;
 const allDiscoveredIds = Array.from(metadataMap.keys());
-const fallbackDefaultId = allDiscoveredIds.length > 0 ? allDiscoveredIds[0] : '';
 
-const rawLanguages: string[] = Array.isArray(configAny.languages)
-  ? configAny.languages
-  : (configAny.default_language || configAny.language)
-    ? [configAny.default_language || configAny.language]
-    : allDiscoveredIds;
+const rawLanguages: string[] = Array.isArray(config.languages)
+  ? config.languages
+  : (config.default_language ? [config.default_language] : allDiscoveredIds);
 
 export const enabledLanguageIds = rawLanguages.filter(id => metadataMap.has(id));
 
 export const defaultLanguageId: string =
-  configAny.default_language ||
-  (enabledLanguageIds.length > 0 ? enabledLanguageIds[0] : fallbackDefaultId);
+  config.default_language ||
+  (enabledLanguageIds.length > 0 ? enabledLanguageIds[0] : (allDiscoveredIds[0] || ''));
 
 // Cache for loaded CodeRunner instances and pending load promises
 const runnerCache = new Map<string, CodeRunner>();
@@ -123,11 +134,31 @@ export function getLanguageSyntax(id: string): Extension | undefined {
   return syntaxMap.get(id);
 }
 
-export function getAllDiscoveredLanguages(): LanguageMetadata[] {
-  return Array.from(metadataMap.values());
+export function getLanguageLinter(id: string): Extension | undefined {
+  if (linterMap.has(id)) {
+    return linterMap.get(id);
+  }
+  const runner = runnerCache.get(id);
+  if (runner && typeof runner.lint === 'function') {
+    const autoLinter = createLanguageLinter(runner, id);
+    linterMap.set(id, autoLinter);
+    return autoLinter;
+  }
+  return undefined;
+}
+
+export function getLanguageExtension(id: string): Extension {
+  const syntax = syntaxMap.get(id);
+  const linter = getLanguageLinter(id);
+  const extensions: Extension[] = [];
+  if (syntax) extensions.push(syntax);
+  if (linter) extensions.push(linter);
+  return extensions;
 }
 
 let isPrewarming = false;
+
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export async function prewarmBackgroundLanguages(activeLangId?: string): Promise<void> {
   if (isPrewarming) return;
@@ -138,6 +169,8 @@ export async function prewarmBackgroundLanguages(activeLangId?: string): Promise
 
   for (const langId of otherLangIds) {
     try {
+      // Yield to browser event loop before initializing next worker
+      await sleep(150);
       const runner = await loadLanguageRunner(langId);
       if (runner.whenReady) {
         await runner.whenReady();

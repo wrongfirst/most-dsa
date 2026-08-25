@@ -36,7 +36,7 @@ export function escapeHtml(str: string): string {
         .replace(/'/g, '&#039;');
 }
 
-export function isSafeUrl(url: string): boolean {
+function isSafeUrl(url: string): boolean {
     if (!url) return false;
     const trimmed = url.trim().toLowerCase();
     // Allow safe absolute web and email protocols
@@ -103,10 +103,6 @@ const chatMarked = new Marked({
     }
 });
 
-export function configureMarkdown() {
-    // Configured via dedicated Marked instances
-}
-
 export const parseMarkdown = (text: string): string => {
     const raw = descMarked.parse(text) as string;
     return DOMPurify.sanitize(raw, PURIFY_CONFIG);
@@ -116,7 +112,7 @@ export const parseMarkdown = (text: string): string => {
  * Strips model reasoning and thought blocks (<thought>...</thought>, <think>...</think>),
  * including open in-progress streaming thought blocks.
  */
-export function stripThoughtBlocks(text: string): string {
+function stripThoughtBlocks(text: string): string {
     if (!text) return '';
     return text
         // Remove closed thought / think tags and content
@@ -134,11 +130,31 @@ export const parseChatMarkdown = (text: string): string => {
 };
 
 
+let activeStaticViews: EditorView[] = [];
+
+/**
+ * Destroys all currently active static CodeMirror editor views to prevent memory leaks.
+ */
+export function destroyStaticBlocks(): void {
+    for (const view of activeStaticViews) {
+        try {
+            view.destroy();
+        } catch {
+            // Non-fatal if view is already unmounted
+        }
+    }
+    activeStaticViews = [];
+}
+
 //JN: Right now, codemirror essentially "injects" a read only editor in the markdown codeblocks using this
 //function. So all codeblocks in the problem description are effectively read-only editors. Does this add
 //an overhead as the number of code blocks across all exercises scales?
-export function highlightStaticBlocks() {
-    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+export function highlightStaticBlocks(): void {
+    destroyStaticBlocks();
+
+    if (typeof document === 'undefined') return;
+
+    const isDark = typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches;
     const blocks = document.querySelectorAll('.cm-static-code');
     blocks.forEach(block => {
         const text = block.textContent || "";
@@ -148,7 +164,7 @@ export function highlightStaticBlocks() {
 
         block.textContent = "";
 
-        new EditorView({
+        const view = new EditorView({
             state: EditorState.create({
                 doc: text,
                 extensions: [
@@ -165,5 +181,8 @@ export function highlightStaticBlocks() {
             }),
             parent: block as HTMLElement
         });
+
+        activeStaticViews.push(view);
     });
 }
+

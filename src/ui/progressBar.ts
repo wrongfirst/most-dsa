@@ -1,24 +1,40 @@
 import { Chapter } from '../core/types';
 import { ICONS } from './icons';
+import { store } from '../core/store';
+
+let isListenerBound = false;
 
 export function renderProgressBar(
     container: HTMLElement | null,
     curriculum: Chapter[],
-    currentExerciseId: string,
-    completedIds: string[]
+    activeLessonSlug: string,
+    completedSlugs: string[]
 ) {
     if (!container) return;
 
-    const currentChapter = curriculum.find(c => c.exercises.some(e => e.id === currentExerciseId));
+    if (!isListenerBound) {
+        isListenerBound = true;
+        container.addEventListener('click', (e) => {
+            const item = (e.target as HTMLElement).closest<HTMLElement>('.progress-step');
+            if (!item) return;
+            const exId = item.getAttribute('data-exercise-id');
+            if (exId) {
+                window.location.hash = '#' + exId;
+                store.getState().setCurrent(exId);
+            }
+        });
+    }
+
+    const currentChapter = curriculum.find(c => c.exercises.some(e => e.id === activeLessonSlug));
     if (currentChapter) {
         const total = currentChapter.exercises.length;
-        const nextUncompletedIndex = currentChapter.exercises.findIndex(e => !completedIds.includes(e.id));
+        const nextUncompletedIndex = currentChapter.exercises.findIndex(e => !completedSlugs.includes(e.id));
 
         container.innerHTML = currentChapter.exercises.map((e, idx) => {
-            const isCompleted = completedIds.includes(e.id);
-            const isNext = idx === nextUncompletedIndex || (nextUncompletedIndex === -1 && false);
+            const isCompleted = completedSlugs.includes(e.id);
+            const isNext = idx === nextUncompletedIndex;
             const isLast = idx === total - 1;
-            const isActive = e.id === currentExerciseId;
+            const isActive = e.id === activeLessonSlug;
 
             //circle style
             let circleClass = 'border border-border-default bg-bg-surface';
@@ -46,7 +62,7 @@ export function renderProgressBar(
             }
 
             return `
-                <div class="relative flex items-center group cursor-pointer" onclick="location.hash='#${e.id}'" title="${e.title}">
+                <div class="progress-step relative flex items-center group cursor-pointer" data-exercise-id="${e.id}" title="${e.title}">
                     <div class="w-4 h-4 rounded-full flex items-center justify-center transition-all duration-300 z-10 ${circleClass}">
                         ${content}
                     </div>
@@ -60,3 +76,4 @@ export function renderProgressBar(
         }).join('');
     }
 }
+

@@ -2,6 +2,16 @@ import { elements } from '../core/elements';
 import { ICONS } from './icons';
 import { store } from '../core/store';
 import { abortAllStreams } from './chatPanel';
+import { pushToGist } from '../core/sync/syncManager';
+
+export interface ConfirmDialogOptions {
+    title?: string;
+    message: string;
+    confirmText?: string;
+    onConfirm: () => void | Promise<void>;
+}
+
+let pendingConfirmCallback: (() => void | Promise<void>) | null = null;
 
 export function initResetProgress() {
     if (elements.resetProgressBtn) {
@@ -11,14 +21,34 @@ export function initResetProgress() {
         elements.resetProgress.closeBtn.innerHTML = ICONS.CLOSE;
     }
 
-    elements.resetProgressBtn?.addEventListener('click', openModal);
-    elements.resetProgress.closeBtn?.addEventListener('click', closeModal);
-    elements.resetProgress.cancelBtn?.addEventListener('click', closeModal);
+    elements.resetProgressBtn?.addEventListener('click', () => {
+        showConfirmDialog({
+            title: 'Reset Progress',
+            message: 'Are you sure you want to reset all progress? This will delete your saved code and completion status for all exercises. This action cannot be undone.',
+            confirmText: 'Reset All',
+            onConfirm: async () => {
+                abortAllStreams();
+                store.getState().resetProgress();
+                
+                const { gistSyncSettings } = store.getState();
+                if (gistSyncSettings?.enabled && gistSyncSettings?.gistId && gistSyncSettings?.token) {
+                    await pushToGist();
+                }
 
-    elements.resetProgress.confirmBtn?.addEventListener('click', () => {
-        abortAllStreams();
-        store.getState().resetProgress();
-        window.location.reload();
+                window.location.reload();
+            },
+        });
+    });
+
+    elements.resetProgress.closeBtn?.addEventListener('click', closeConfirmDialog);
+    elements.resetProgress.cancelBtn?.addEventListener('click', closeConfirmDialog);
+
+    elements.resetProgress.confirmBtn?.addEventListener('click', async () => {
+        const callback = pendingConfirmCallback;
+        closeConfirmDialog();
+        if (callback) {
+            await callback();
+        }
     });
 
     //close on click outside (only if both mousedown and click originated directly on the backdrop)
@@ -30,24 +60,38 @@ export function initResetProgress() {
 
     elements.resetProgress.modal?.addEventListener('click', (e) => {
         if (isMouseDownOnBackdrop && e.target === elements.resetProgress.modal) {
-            closeModal();
+            closeConfirmDialog();
         }
         isMouseDownOnBackdrop = false;
     });
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && elements.resetProgress.modal && !elements.resetProgress.modal.classList.contains('hidden')) {
-            closeModal();
+            closeConfirmDialog();
         }
     });
 }
 
-function openModal() {
+export function showConfirmDialog(options: ConfirmDialogOptions) {
+    if (elements.resetProgress.title) {
+        elements.resetProgress.title.textContent = options.title || 'Confirm Action';
+    }
+    if (elements.resetProgress.desc) {
+        elements.resetProgress.desc.textContent = options.message;
+    }
+    if (elements.resetProgress.confirmBtn) {
+        elements.resetProgress.confirmBtn.textContent = options.confirmText || 'Confirm';
+    }
+
+    pendingConfirmCallback = options.onConfirm;
+
     elements.resetProgress.modal?.classList.remove('hidden');
     elements.resetProgress.modal?.classList.add('flex');
 }
 
-function closeModal() {
+export function closeConfirmDialog() {
+    pendingConfirmCallback = null;
     elements.resetProgress.modal?.classList.add('hidden');
     elements.resetProgress.modal?.classList.remove('flex');
 }
+

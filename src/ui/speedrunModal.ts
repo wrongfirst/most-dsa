@@ -3,6 +3,8 @@ import {
   type VerificationItemResult
 } from '../core/verifier';
 import { getEnabledLanguages } from '../languages/language-registry';
+import { getExercise, getExerciseDisplayNumber } from '../exercises/exercise-registry';
+import { getExerciseVariant } from '../core/types';
 import { elements } from '../core/elements';
 import { ICONS } from './icons';
 
@@ -254,8 +256,22 @@ function updateExportButton() {
 }
 
 function handleExportCases() {
-  const exportList = getExportableResults();
-  if (exportList.length === 0) return;
+  const rawList = getExportableResults();
+  if (rawList.length === 0) return;
+
+  const exportList = rawList.map((item) => {
+    if (item.description !== undefined && item.solutionCode !== undefined && item.testCode !== undefined) {
+      return item;
+    }
+    const ex = getExercise(item.exerciseId);
+    const variant = ex ? getExerciseVariant(ex, item.languageId) : undefined;
+    return {
+      ...item,
+      description: item.description ?? ex?.description ?? '',
+      solutionCode: item.solutionCode ?? variant?.solutionCode ?? '',
+      testCode: item.testCode ?? variant?.testCode ?? ''
+    };
+  });
 
   const dataStr = JSON.stringify(exportList, null, 2);
   const blob = new Blob([dataStr], { type: 'application/json' });
@@ -374,7 +390,9 @@ async function handleToggleRun() {
 
         if (prog.currentItem && !prog.latestResult) {
           if (progressStatus) {
-            progressStatus.textContent = `Running ${prog.currentItem.exerciseId} (${prog.currentItem.languageId})...`;
+            const displayNum = getExerciseDisplayNumber(prog.currentItem.exerciseId);
+            const title = displayNum ? `${displayNum} ${prog.currentItem.exerciseTitle}` : (prog.currentItem.exerciseTitle || prog.currentItem.exerciseId);
+            progressStatus.textContent = `Running ${title} (${prog.currentItem.languageId})...`;
           }
         }
 
@@ -428,6 +446,8 @@ function appendResultCard(container: HTMLElement, result: VerificationItemResult
   const badge = badgeColors[result.status] || badgeColors.error;
   const hasLogs = Boolean(result.error || result.output);
   const cardId = `speedrun-card-${result.exerciseId.replace('.', '_')}-${result.languageId}`;
+  const displayNum = getExerciseDisplayNumber(result.exerciseId);
+  const titleText = displayNum ? `${displayNum} ${result.exerciseTitle}` : result.exerciseTitle;
 
   const card = document.createElement('div');
   card.className = 'border border-border-default rounded-lg bg-bg-surface overflow-hidden transition-all text-xs';
@@ -438,7 +458,7 @@ function appendResultCard(container: HTMLElement, result: VerificationItemResult
         <span class="px-2 py-0.5 font-bold uppercase rounded text-[10px] border ${badge.bg} ${badge.text}">
           ${badge.label}
         </span>
-        <span class="font-semibold text-fg-primary">${result.exerciseId} ${result.exerciseTitle}</span>
+        <span class="font-semibold text-fg-primary">${escapeHtml(titleText)}</span>
         <span class="font-mono text-fg-muted bg-bg-app px-1.5 py-0.5 rounded text-[11px]">${result.languageId}</span>
       </div>
       <div class="flex items-center gap-3">

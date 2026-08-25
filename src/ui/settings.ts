@@ -1,14 +1,23 @@
 //TODO: Are there portions here that can be pushed off to index.html?
 import { elements } from '../core/elements';
-import { store, ChatSettings, ChatEndpoint } from '../core/store';
+import { store, ensureSettingsDecrypted, ChatSettings, ChatEndpoint, GistSyncSettings } from '../core/store';
 import { updateEditorVimMode } from '../core/editor';
+import { decryptSecret } from '../core/crypto';
 import { ICONS } from './icons';
-import siteConfig from '../../site.toml';
+import { abortAllStreams } from './chatPanel';
+import { showConfirmDialog } from './resetProgress';
+import { showPopup } from './popup';
+import { pullFromGist, pushToGist, initiateOAuthLogin, subscribeSyncStatus, getSyncStatus, SyncStateEvent, createAndLinkGist } from '../core/sync/syncManager';
+import { validateToken, extractGistId } from '../core/sync/gistClient';
+import { SITE_SLUG } from '../core/siteConfig';
+import { buildManualExportPayload, parseManualImport } from '../core/backup';
+import { getModelsUrl } from '../core/chat/client';
 
 let cachedModels: string[] = [];
 let isFetchingModels = false;
 let modelFetchError: string | null = null;
 let isDetailsExpanded = false;
+let isManualGistExpanded = false;
 
 export function initSettings() {
     if (elements.settingsBtn) {
@@ -23,6 +32,17 @@ export function initSettings() {
     if (elements.settings.importBackupIcon) {
         elements.settings.importBackupIcon.innerHTML = ICONS.UPLOAD;
     }
+    if (elements.settings.clearStorageIcon) {
+        elements.settings.clearStorageIcon.innerHTML = ICONS.TRASH;
+    }
+    if (elements.settings.gistManualChevron) {
+        elements.settings.gistManualChevron.innerHTML = ICONS.CHEVRON_RIGHT;
+    }
+
+    // Subscribe to reactive sync status updates
+    subscribeSyncStatus((event) => {
+        updateSyncStatusUI(event);
+    });
 
     // Bind static event listeners once
     bindStaticListeners();
@@ -78,15 +98,19 @@ function bindStaticListeners() {
     // Chat toggle listener
     elements.settings.chatToggle?.addEventListener('change', (e) => {
         const enabled = (e.target as HTMLInputElement).checked;
+        if (enabled) {
+            isDetailsExpanded = true;
+        }
         store.getState().setChatSettings({ enabled });
         if (enabled) {
             elements.settings.chatFields?.classList.remove('hidden');
-            if (cachedModels.length === 0) {
+            if (cachedModels.length === 0 && store.getState().chatSettings.baseUrl) {
                 triggerModelFetch();
             }
         } else {
             elements.settings.chatFields?.classList.add('hidden');
         }
+        syncSettingsUI();
     });
 
     // Refresh Models button
@@ -107,21 +131,59 @@ function bindStaticListeners() {
     elements.settings.importBackupInput?.addEventListener('change', (e) => {
         handleImportBackup(e);
     });
+
+    // Clear / Nuke Local Storage button
+    elements.settings.clearStorageBtn?.addEventListener('click', () => {
+        handleClearLocalStorage();
+    });
+
+    // Gist Sync listeners
+    elements.settings.gistOAuthLoginBtn?.addEventListener('click', () => {
+        initiateOAuthLogin();
+    });
+
+    // Collapsible Manual PAT toggle
+    updateManualGistToggleUI();
+    elements.settings.gistManualToggleBtn?.addEventListener('click', () => {
+        isManualGistExpanded = !isManualGistExpanded;
+        updateManualGistToggleUI();
+    });
+
+    elements.settings.gistManualConnectBtn?.addEventListener('click', () => {
+        handleManualGistConnect();
+    });
+
+    elements.settings.gistSyncNowBtn?.addEventListener('click', () => {
+        handleSyncNow();
+    });
+
+    elements.settings.gistPullBtn?.addEventListener('click', () => {
+        handlePullGist();
+    });
+
+    elements.settings.gistUnlinkBtn?.addEventListener('click', () => {
+        handleUnlinkGist();
+    });
+
+    elements.settings.gistAutosyncToggle?.addEventListener('change', (e) => {
+        const checked = (e.target as HTMLInputElement).checked;
+        store.getState().setGistSyncSettings({ autoSync: checked });
+    });
 }
 
 function syncSettingsUI() {
     const isVimEnabled = store.getState().vimMode;
     const chatSettings = store.getState().chatSettings || {
         enabled: false,
-        baseUrl: 'https://api.openai.com/v1',
+        baseUrl: '',
         apiKey: '',
         model: '',
         selectedEndpointId: 'default-endpoint',
         endpoints: [
             {
                 id: 'default-endpoint',
-                name: 'OpenAI API',
-                baseUrl: 'https://api.openai.com/v1',
+                name: 'Endpoint 1',
+                baseUrl: '',
                 apiKey: '',
                 model: '',
             }
@@ -143,6 +205,16 @@ function syncSettingsUI() {
     renderEndpointSelector(chatSettings);
     renderKeyContainer(chatSettings);
     renderModelSelector(chatSettings);
+
+    const gistSyncSettings = store.getState().gistSyncSettings || {
+        enabled: false,
+        token: '',
+        gistId: '',
+        autoSync: true,
+    };
+    renderGistSection(gistSyncSettings);
+
+    updateStorageUsageDisplay();
 }
 
 function renderEndpointSelector(chatSettings: ChatSettings) {
@@ -151,7 +223,8 @@ function renderEndpointSelector(chatSettings: ChatSettings) {
     const endpoints = chatSettings.endpoints || [];
     const selectedId = chatSettings.selectedEndpointId;
     const currentEndpoint = endpoints.find(ep => ep.id === selectedId) || endpoints[0];
-    const canDelete = endpoints.length > 1;
+    const hasData = !!(currentEndpoint?.name?.trim() || currentEndpoint?.baseUrl?.trim() || currentEndpoint?.apiKey?.trim());
+    const canDelete = endpoints.length > 1 || hasData;
 
     elements.settings.endpointSection.innerHTML = `
         <div class="flex flex-col space-y-1.5">
@@ -401,11 +474,13 @@ function attachEndpointListeners() {
     // Delete endpoint button
     deleteBtn?.addEventListener('click', () => {
         const cs = store.getState().chatSettings;
-        if (cs.endpoints && cs.endpoints.length > 1) {
-            const updated = cs.endpoints.filter(ep => ep.id !== cs.selectedEndpointId);
+        const endpoints = cs.endpoints || [];
+        cachedModels = [];
+        modelFetchError = null;
+
+        if (endpoints.length > 1) {
+            const updated = endpoints.filter(ep => ep.id !== cs.selectedEndpointId);
             const nextSelected = updated[0];
-            cachedModels = [];
-            modelFetchError = null;
             store.getState().setChatSettings({
                 endpoints: updated,
                 selectedEndpointId: nextSelected.id,
@@ -417,6 +492,23 @@ function attachEndpointListeners() {
             if (nextSelected.baseUrl) {
                 triggerModelFetch();
             }
+        } else {
+            const resetEp: ChatEndpoint = {
+                id: 'default-endpoint',
+                name: '',
+                baseUrl: '',
+                apiKey: '',
+                model: '',
+            };
+            store.getState().setChatSettings({
+                endpoints: [resetEp],
+                selectedEndpointId: resetEp.id,
+                baseUrl: '',
+                apiKey: '',
+                model: '',
+            });
+            isDetailsExpanded = true;
+            syncSettingsUI();
         }
     });
 
@@ -654,22 +746,16 @@ async function triggerModelFetch() {
 async function fetchAvailableModels(baseUrl: string, apiKey: string): Promise<{ success: boolean; models: string[]; error?: string }> {
     if (!baseUrl) return { success: false, models: [], error: 'Base URL is required' };
 
+    const resolvedApiKey = (await decryptSecret(apiKey || '')).trim();
+    const endpoint = getModelsUrl(baseUrl);
     const cleanBaseUrl = baseUrl.replace(/\/+$/, '');
-    let endpoint: string;
-    if (cleanBaseUrl.endsWith('/chat/completions')) {
-        endpoint = cleanBaseUrl.replace(/\/chat\/completions$/, '/models');
-    } else if (cleanBaseUrl.endsWith('/v1')) {
-        endpoint = `${cleanBaseUrl}/models`;
-    } else {
-        endpoint = `${cleanBaseUrl}/models`;
-    }
 
     try {
         const headers: Record<string, string> = {
             'Content-Type': 'application/json',
         };
-        if (apiKey) {
-            headers['Authorization'] = `Bearer ${apiKey}`;
+        if (resolvedApiKey) {
+            headers['Authorization'] = `Bearer ${resolvedApiKey}`;
         }
         if (cleanBaseUrl.includes('anthropic.com')) {
             headers['anthropic-dangerous-direct-browser-access'] = 'true';
@@ -728,11 +814,14 @@ async function fetchAvailableModels(baseUrl: string, apiKey: string): Promise<{ 
 }
 
 function openModal() {
+    const cs = store.getState().chatSettings;
+    if (cs.enabled && !cs.baseUrl) {
+        isDetailsExpanded = true;
+    }
     syncSettingsUI();
     elements.settings.modal?.classList.remove('hidden');
     elements.settings.modal?.classList.add('flex');
 
-    const cs = store.getState().chatSettings;
     if (cs.baseUrl && cachedModels.length === 0 && !isFetchingModels) {
         triggerModelFetch();
     }
@@ -745,6 +834,7 @@ function closeModal() {
 
 function formatMaskedKey(key: string): string {
     if (!key) return '';
+    if (key.startsWith('enc:v1:')) return '••••••••';
     const visibleLength = Math.min(10, Math.max(4, Math.floor(key.length / 3)));
     const prefix = key.slice(0, visibleLength);
     return `${prefix}••••••••`;
@@ -764,8 +854,8 @@ function showBackupStatus(message: string, isError: boolean = false) {
     if (!el) return;
     el.textContent = message;
     el.className = `text-xs rounded-md p-2 transition-all ${isError
-            ? 'bg-red-500/10 border border-red-500/20 text-red-400 block'
-            : 'bg-green-500/10 border border-green-500/20 text-green-400 block'
+        ? 'bg-red-500/10 border border-red-500/20 text-red-400 block'
+        : 'bg-green-500/10 border border-green-500/20 text-green-400 block'
         }`;
     setTimeout(() => {
         if (el.textContent === message) {
@@ -775,44 +865,12 @@ function showBackupStatus(message: string, isError: boolean = false) {
     }, 5000);
 }
 
-function handleExportBackup() {
+async function handleExportBackup() {
     try {
         const state = store.getState();
         const includeKeys = !!elements.settings.includeKeysCheckbox?.checked;
 
-        // Copy and sanitize chat settings based on checkbox
-        let exportChatSettings: ChatSettings = {
-            ...state.chatSettings,
-            endpoints: (state.chatSettings.endpoints || []).map(ep => ({ ...ep })),
-        };
-
-        if (!includeKeys) {
-            exportChatSettings.apiKey = '';
-            exportChatSettings.endpoints = exportChatSettings.endpoints.map(ep => ({
-                ...ep,
-                apiKey: '',
-            }));
-        }
-
-        const siteTitle = siteConfig.title || 'codebook';
-        const siteSlug = siteTitle.toLowerCase().replace(/[^a-z0-9_-]+/g, '-').replace(/^-+|-+$/g, '') || 'codebook';
-
-        const backupPayload = {
-            version: 1,
-            siteTitle,
-            exportedAt: new Date().toISOString(),
-            data: {
-                currentExerciseId: state.currentExerciseId,
-                currentLanguageId: state.currentLanguageId,
-                completedIds: state.completedIds,
-                userCode: state.userCode,
-                vimMode: state.vimMode,
-                chatSettings: exportChatSettings,
-                chatHistory: state.chatHistory,
-            },
-        };
-
-        const dataStr = JSON.stringify(backupPayload, null, 2);
+        const dataStr = await buildManualExportPayload(state, { includeKeys });
         const blob = new Blob([dataStr], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -822,7 +880,7 @@ function handleExportBackup() {
         const timestamp = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}_${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
 
         a.href = url;
-        a.download = `${siteSlug}-backup-${timestamp}.json`;
+        a.download = `${SITE_SLUG}-backup-${timestamp}.json`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -841,66 +899,343 @@ async function handleImportBackup(e: Event) {
 
     try {
         const text = await file.text();
-        let parsed: any;
-        try {
-            parsed = JSON.parse(text);
-        } catch {
-            showBackupStatus('Import failed: The selected file is not valid JSON.', true);
-            input.value = '';
-            return;
-        }
+        const result = parseManualImport(text, store.getState());
 
-        const currentSiteTitle = siteConfig.title || 'codebook';
-
-        // Check if file has metadata wrapper or raw state dump
-        let backupData: any = null;
-        let fileSiteTitle: string | null = null;
-
-        if (parsed && typeof parsed === 'object') {
-            if (parsed.data && typeof parsed.data === 'object') {
-                backupData = parsed.data;
-                fileSiteTitle = parsed.siteTitle || null;
-            } else if (parsed.state && typeof parsed.state === 'object') {
-                backupData = parsed.state;
-                fileSiteTitle = parsed.siteTitle || null;
-            } else {
-                backupData = parsed;
-                fileSiteTitle = parsed.siteTitle || null;
-            }
-        }
-
-        if (!backupData || typeof backupData !== 'object') {
-            showBackupStatus('Import failed: Backup file does not contain valid application state.', true);
-            input.value = '';
-            return;
-        }
-
-        // Strict siteTitle validation
-        if (fileSiteTitle && fileSiteTitle !== currentSiteTitle) {
-            showBackupStatus(
-                `Import rejected: Backup is for "${fileSiteTitle}", but current site is "${currentSiteTitle}".`,
-                true
-            );
+        if (!result.success || !result.data) {
+            showBackupStatus(result.error || 'Import failed: The selected file is not valid JSON.', true);
             input.value = '';
             return;
         }
 
         // Apply backup to store
-        store.getState().restoreBackup(backupData);
+        store.getState().restoreBackup(result.data);
 
         // Sync editor vim mode and UI
-        if (typeof backupData.vimMode === 'boolean') {
-            updateEditorVimMode(backupData.vimMode);
+        if (typeof result.data.vimMode === 'boolean') {
+            updateEditorVimMode(result.data.vimMode);
         }
         cachedModels = [];
         modelFetchError = null;
         syncSettingsUI();
+        updateStorageUsageDisplay();
 
         showBackupStatus('Backup restored successfully.');
     } catch (err: any) {
         showBackupStatus(`Import failed: ${err?.message || 'Unknown error'}`, true);
     } finally {
         input.value = '';
+    }
+}
+
+function formatBytes(bytes: number, decimals = 1): string {
+    if (bytes <= 0) return '0 B';
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    const formatted = parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
+    return `${formatted} ${sizes[i] || 'B'}`;
+}
+
+export function calculateLocalStorageUsage(): { bytes: number; formatted: string } {
+    let totalBytes = 0;
+    try {
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key) {
+                const val = localStorage.getItem(key) || '';
+                // UTF-16 strings take ~2 bytes per character
+                totalBytes += (key.length + val.length) * 2;
+            }
+        }
+    } catch {
+        // Handle potential sandbox/quota restrictions
+    }
+    return {
+        bytes: totalBytes,
+        formatted: formatBytes(totalBytes),
+    };
+}
+
+function updateStorageUsageDisplay() {
+    if (elements.settings.storageUsageDisplay) {
+        const usage = calculateLocalStorageUsage();
+        elements.settings.storageUsageDisplay.textContent = `${usage.formatted} used`;
+    }
+}
+
+function handleClearLocalStorage() {
+    showConfirmDialog({
+        title: 'Nuke Local Storage',
+        message: 'Are you sure you want to delete all local storage? This will permanently wipe all your exercise progress, saved code, chat history, credentials, and settings. This action cannot be undone.',
+        confirmText: 'Nuke All Storage',
+        onConfirm: () => {
+            abortAllStreams();
+            try {
+                store.getState().unlinkGist();
+            } catch { }
+            localStorage.clear();
+            window.location.reload();
+        },
+    });
+}
+
+// ==========================================
+// Gist Sync UI Renderers and Handlers
+// ==========================================
+
+function updateSyncStatusUI(event: SyncStateEvent) {
+    const badge = elements.settings.gistSyncBadge;
+    const dot = elements.settings.gistSyncDot;
+    const badgeText = elements.settings.gistSyncBadgeText;
+    const syncNowBtn = elements.settings.gistSyncNowBtn;
+    const syncNowText = elements.settings.gistSyncNowText;
+
+    if (!badge || !dot || !badgeText) return;
+
+    const gistSettings = store.getState().gistSyncSettings;
+    const isLinked = !!gistSettings?.gistId;
+
+    if (!isLinked) {
+        badge.classList.remove('hidden');
+        badge.classList.add('flex');
+        dot.className = 'w-1.5 h-1.5 rounded-full bg-fg-muted';
+        badgeText.textContent = 'Not connected';
+        badgeText.className = 'text-fg-muted';
+        return;
+    }
+
+    badge.classList.remove('hidden');
+    badge.classList.add('flex');
+
+    if (event.status === 'syncing') {
+        dot.className = 'w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse';
+        badgeText.textContent = 'Syncing...';
+        badgeText.className = 'text-yellow-400 font-medium';
+        if (syncNowBtn) syncNowBtn.disabled = true;
+        if (syncNowText) syncNowText.textContent = 'Syncing...';
+    } else if (event.status === 'error') {
+        dot.className = 'w-1.5 h-1.5 rounded-full bg-red-500';
+        badgeText.textContent = 'Sync Error';
+        badgeText.className = 'text-red-400 font-medium';
+        if (syncNowBtn) syncNowBtn.disabled = false;
+        if (syncNowText) syncNowText.textContent = 'Sync Now';
+    } else if (event.status === 'offline') {
+        dot.className = 'w-1.5 h-1.5 rounded-full bg-fg-muted';
+        badgeText.textContent = 'Offline';
+        badgeText.className = 'text-fg-muted';
+        if (syncNowBtn) syncNowBtn.disabled = true;
+        if (syncNowText) syncNowText.textContent = 'Sync Now';
+    } else {
+        // Synced / Idle with linked gist
+        dot.className = 'w-1.5 h-1.5 rounded-full bg-green-500';
+        if (event.lastSyncedAt) {
+            const timeAgo = formatTimeAgo(event.lastSyncedAt);
+            badgeText.textContent = `Synced ${timeAgo}`;
+        } else {
+            badgeText.textContent = 'Connected';
+        }
+        badgeText.className = 'text-green-500 font-medium';
+        if (syncNowBtn) syncNowBtn.disabled = false;
+        if (syncNowText) syncNowText.textContent = 'Sync Now';
+    }
+}
+
+function formatTimeAgo(timestamp: number): string {
+    const elapsedSeconds = Math.max(0, Math.floor((Date.now() - timestamp) / 1000));
+    if (elapsedSeconds < 10) return 'just now';
+    if (elapsedSeconds < 60) return `${elapsedSeconds}s ago`;
+    const elapsedMinutes = Math.floor(elapsedSeconds / 60);
+    if (elapsedMinutes < 60) return `${elapsedMinutes}m ago`;
+    const elapsedHours = Math.floor(elapsedMinutes / 60);
+    if (elapsedHours < 24) return `${elapsedHours}h ago`;
+    const elapsedDays = Math.floor(elapsedHours / 24);
+    return `${elapsedDays}d ago`;
+}
+
+let cachedGitHubUsername: string | null = null;
+
+function renderGistSection(settings: GistSyncSettings) {
+    const isConnected = !!settings.enabled && !!settings.token && !!settings.gistId;
+    const loggedOutView = elements.settings.gistLoggedOutView;
+    const loggedInView = elements.settings.gistLoggedInView;
+    const usernameEl = elements.settings.gistAccountUsername;
+    const openLink = elements.settings.gistOpenLink;
+    const autosyncToggle = elements.settings.gistAutosyncToggle;
+
+    if (isConnected) {
+        loggedOutView?.classList.add('hidden');
+        loggedInView?.classList.remove('hidden');
+        loggedInView?.classList.add('flex');
+
+        if (openLink) {
+            openLink.href = `https://gist.github.com/${extractGistId(settings.gistId)}`;
+        }
+
+        if (autosyncToggle) {
+            autosyncToggle.checked = settings.autoSync !== false;
+        }
+
+        if (usernameEl) {
+            if (cachedGitHubUsername) {
+                usernameEl.textContent = `Connected as @${cachedGitHubUsername}`;
+            } else {
+                usernameEl.textContent = 'Connected to GitHub';
+                ensureSettingsDecrypted().then(() => {
+                    const activeToken = store.getState().gistSyncSettings?.token;
+                    if (activeToken && !activeToken.startsWith('enc:v1:')) {
+                        validateToken(activeToken).then((res) => {
+                            if (res.valid && res.username) {
+                                cachedGitHubUsername = res.username;
+                                if (usernameEl) {
+                                    usernameEl.textContent = `Connected as @${res.username}`;
+                                }
+                            }
+                        }).catch(() => { });
+                    }
+                }).catch(() => { });
+            }
+        }
+    } else {
+        cachedGitHubUsername = null;
+        loggedOutView?.classList.remove('hidden');
+        loggedInView?.classList.add('hidden');
+        loggedInView?.classList.remove('flex');
+    }
+
+    updateSyncStatusUI(getSyncStatus());
+}
+
+function updateManualGistToggleUI() {
+    const view = elements.settings.gistManualView;
+    const chevron = elements.settings.gistManualChevron;
+    const label = elements.settings.gistManualToggleLabel;
+
+    if (view) {
+        view.classList.toggle('hidden', !isManualGistExpanded);
+        view.classList.toggle('flex', isManualGistExpanded);
+    }
+    if (chevron) {
+        chevron.classList.toggle('rotate-90', isManualGistExpanded);
+    }
+    if (label) {
+        label.textContent = isManualGistExpanded
+            ? 'Hide Personal Access Token (PAT) setup'
+            : 'Or connect manually with Personal Access Token (PAT)';
+    }
+}
+
+function showGistStatus(message: string, isError = false) {
+    const el = elements.settings.gistStatusMsg;
+    if (!el) return;
+    el.textContent = message;
+    el.className = `text-xs rounded-md p-2 transition-all ${isError
+            ? 'bg-red-500/10 border border-red-500/20 text-red-400 block'
+            : 'bg-green-500/10 border border-green-500/20 text-green-400 block'
+        }`;
+    setTimeout(() => {
+        if (el.textContent === message) {
+            el.className = 'hidden text-xs rounded-md p-2';
+            el.textContent = '';
+        }
+    }, 6000);
+}
+
+async function handleSyncNow() {
+    showGistStatus('Syncing progress to GitHub Gist...');
+    const res = await pushToGist();
+    if (res.success) {
+        showGistStatus('Synced successfully with GitHub Gist.');
+    } else {
+        showGistStatus(`Sync failed: ${res.error || 'Network error'}`, true);
+    }
+}
+
+async function handlePullGist() {
+    showGistStatus('Pulling latest progress from GitHub Gist...');
+    const res = await pullFromGist({ smartMerge: true });
+    if (res.success) {
+        showGistStatus('Progress pulled and merged successfully.');
+        syncSettingsUI();
+    } else {
+        showGistStatus(`Pull failed: ${res.error || 'Network error'}`, true);
+    }
+}
+
+function handleUnlinkGist() {
+    showConfirmDialog({
+        title: 'Disconnect GitHub Sync',
+        message: 'Are you sure you want to disconnect? Your local progress will be preserved, but cloud syncing will stop on this device.',
+        confirmText: 'Disconnect',
+        onConfirm: () => {
+            cachedGitHubUsername = null;
+            store.getState().unlinkGist();
+            syncSettingsUI();
+            showGistStatus('Disconnected from GitHub Gist.');
+        },
+    });
+}
+
+async function handleManualGistConnect() {
+    const tokenInput = elements.settings.gistManualToken;
+    const idInput = elements.settings.gistManualId;
+    if (!tokenInput || !idInput) return;
+
+    const token = tokenInput.value.trim();
+    const gistId = idInput.value.trim();
+
+    if (!token) {
+        showGistStatus('Error: GitHub Personal Access Token is required.', true);
+        return;
+    }
+
+    const { gistManualConnectBtn } = elements.settings;
+    if (gistManualConnectBtn) {
+        gistManualConnectBtn.disabled = true;
+        gistManualConnectBtn.textContent = 'Connecting...';
+    }
+
+    try {
+        if (gistId) {
+            // Connect to existing Gist
+            const now = Date.now();
+            store.getState().setGistSyncSettings({
+                enabled: true,
+                token,
+                gistId,
+                autoSync: true,
+                lastSyncedAt: now,
+            });
+            showPopup('Syncing from GitHub...');
+            const res = await pullFromGist({ smartMerge: true });
+            if (res.success) {
+                showGistStatus('Connected and pulled from Gist successfully.');
+                showPopup('Connected to GitHub!');
+                tokenInput.value = '';
+                idInput.value = '';
+                syncSettingsUI();
+            } else {
+                store.getState().unlinkGist();
+                showGistStatus(`Failed to pull from Gist: ${res.error}`, true);
+            }
+        } else {
+            // Create new Gist
+            const res = await createAndLinkGist(token);
+            if (res.success) {
+                showGistStatus('New Gist created and linked successfully.');
+                showPopup('Connected to GitHub!');
+                tokenInput.value = '';
+                idInput.value = '';
+                syncSettingsUI();
+            } else {
+                showGistStatus(`Failed to create Gist: ${res.error}`, true);
+            }
+        }
+    } finally {
+        if (gistManualConnectBtn) {
+            gistManualConnectBtn.disabled = false;
+            gistManualConnectBtn.textContent = 'Connect Manually';
+        }
     }
 }
 

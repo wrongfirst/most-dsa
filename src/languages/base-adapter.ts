@@ -1,4 +1,9 @@
 import type { CodeRunner, ExecutionResult, RunnerStatus } from '../core/types';
+import type { DiagnosticItem } from './types';
+import type {
+  WorkerInboundMessage,
+  WorkerOutboundMessage
+} from './protocol';
 
 export abstract class BaseAdapter implements CodeRunner {
   abstract name: string;
@@ -18,8 +23,25 @@ export abstract class BaseAdapter implements CodeRunner {
   >();
   private requestIdCounter = 0;
 
+  protected pendingLintCallbacks = new Map<
+    string,
+    { resolve: (diags: DiagnosticItem[]) => void; timer: ReturnType<typeof setTimeout> }
+  >();
+  private lintRequestIdCounter = 0;
+  private latestLintReqId = 0;
+  private activeLintRequestId: string | null = null;
+
   constructor() {
-    this.initWorker();
+    // Defer initWorker to microtask to ensure derived class fields are initialized
+    queueMicrotask(() => {
+      if (!this.worker) {
+        this.initWorker();
+      }
+    });
+  }
+
+  protected postToWorker(message: WorkerInboundMessage): void {
+    this.worker?.postMessage(message);
   }
 
   protected clearPendingCallbacks(reason = `${this.name} worker was terminated or restarted.`) {
@@ -32,6 +54,13 @@ export abstract class BaseAdapter implements CodeRunner {
       });
     }
     this.pendingCallbacks.clear();
+
+    for (const pending of this.pendingLintCallbacks.values()) {
+      clearTimeout(pending.timer);
+      pending.resolve([]);
+    }
+    this.pendingLintCallbacks.clear();
+    this.activeLintRequestId = null;
   }
 
   protected notifyStatusListeners() {
@@ -61,6 +90,7 @@ export abstract class BaseAdapter implements CodeRunner {
   protected initWorker() {
     if (this.worker) {
       this.worker.terminate();
+      this.worker = null;
     }
     this.ready = false;
     this.status = 'loading';
@@ -68,11 +98,25 @@ export abstract class BaseAdapter implements CodeRunner {
     this.clearPendingCallbacks();
     this.notifyStatusListeners();
 
-    this.worker = this.createWorker();
+    try {
+      const w = this.createWorker();
+      if (!w) return;
+      this.worker = w;
+    } catch (err: any) {
+      console.error(`[${this.name || 'BaseAdapter'} createWorker Error]:`, err);
+      this.status = 'error';
+      const errorMessage = err?.message || 'Failed to create worker';
+      this.initError = errorMessage;
+      this.rejectReadyPromises(new Error(errorMessage));
+      this.notifyStatusListeners();
+      return;
+    }
 
-    this.worker.onmessage = (e: MessageEvent) => {
+    this.worker.onmessage = (e: MessageEvent<WorkerOutboundMessage>) => {
       const data = e.data;
-      if (data?.type === 'READY') {
+      if (!data) return;
+
+      if (data.type === 'READY') {
         this.ready = true;
         this.status = 'ready';
         this.initError = null;
@@ -81,7 +125,7 @@ export abstract class BaseAdapter implements CodeRunner {
         return;
       }
 
-      if (data?.type === 'INIT_ERROR') {
+      if (data.type === 'INIT_ERROR') {
         console.error(`[${this.name} Worker Init Error]:`, data.error);
         this.ready = false;
         this.status = 'error';
@@ -92,7 +136,7 @@ export abstract class BaseAdapter implements CodeRunner {
         return;
       }
 
-      if (data?.type === 'RESULT' && data.id) {
+      if (data.type === 'RESULT' && data.id) {
         const pending = this.pendingCallbacks.get(data.id);
         if (pending) {
           clearTimeout(pending.timer);
@@ -103,6 +147,25 @@ export abstract class BaseAdapter implements CodeRunner {
             error: data.error
           });
         }
+        return;
+      }
+
+      if (data.type === 'LINT_RESULT' && data.id) {
+        if (this.activeLintRequestId === data.id) {
+          this.activeLintRequestId = null;
+        }
+        const pending = this.pendingLintCallbacks.get(data.id);
+        if (pending) {
+          clearTimeout(pending.timer);
+          this.pendingLintCallbacks.delete(data.id);
+          pending.resolve(data.diagnostics || []);
+        }
+        return;
+      }
+
+      if (data.type === 'RESET_DONE') {
+        // State reset acknowledged by worker
+        return;
       }
     };
 
@@ -169,6 +232,10 @@ export abstract class BaseAdapter implements CodeRunner {
   }
 
   async run(userCode: string, testCode: string = ''): Promise<ExecutionResult> {
+    if (this.initError || this.status === 'error') {
+      this.initWorker();
+    }
+
     const isReadyNow = await this.waitUntilReady();
 
     if (this.initError) {
@@ -202,7 +269,7 @@ export abstract class BaseAdapter implements CodeRunner {
 
       this.pendingCallbacks.set(id, { resolve, timer });
 
-      this.worker?.postMessage({
+      this.postToWorker({
         type: 'RUN',
         id,
         userCode,
@@ -211,8 +278,94 @@ export abstract class BaseAdapter implements CodeRunner {
     });
   }
 
+  async lint(code: string): Promise<DiagnosticItem[]> {
+    if (!code.trim()) return [];
+    if (!this.ready || !this.worker || this.initError) return [];
+
+    // If an earlier lint request is still active, send a cancel signal to the worker
+    if (this.activeLintRequestId) {
+      this.postToWorker({
+        type: 'CANCEL',
+        id: this.activeLintRequestId
+      });
+      const previousPending = this.pendingLintCallbacks.get(this.activeLintRequestId);
+      if (previousPending) {
+        clearTimeout(previousPending.timer);
+        this.pendingLintCallbacks.delete(this.activeLintRequestId);
+        previousPending.resolve([]);
+      }
+    }
+
+    const reqNum = ++this.lintRequestIdCounter;
+    this.latestLintReqId = reqNum;
+    const id = `lint_${reqNum}_${Date.now()}`;
+    this.activeLintRequestId = id;
+
+    return new Promise<DiagnosticItem[]>((resolve) => {
+      const timer = setTimeout(() => {
+        if (this.activeLintRequestId === id) {
+          this.activeLintRequestId = null;
+        }
+        this.pendingLintCallbacks.delete(id);
+        resolve([]);
+      }, 10_000);
+
+      this.pendingLintCallbacks.set(id, {
+        resolve: (diags) => {
+          if (reqNum === this.latestLintReqId) {
+            resolve(diags);
+          } else {
+            resolve([]);
+          }
+        },
+        timer
+      });
+
+      this.postToWorker({
+        type: 'LINT',
+        id,
+        code
+      });
+    });
+  }
+
+  async reset(): Promise<void> {
+    if (!this.worker || !this.ready) return;
+    this.postToWorker({
+      type: 'RESET'
+    });
+  }
+
   terminate(): void {
     this.initWorker();
   }
 }
 
+export class GenericLanguageAdapter extends BaseAdapter {
+  name: string;
+  private workerFactory: () => Worker;
+
+  constructor(
+    name: string,
+    workerFactory: () => Worker
+  ) {
+    super();
+    this.name = name;
+    this.workerFactory = workerFactory;
+    this.initWorker();
+  }
+
+  protected createWorker(): Worker {
+    if (!this.workerFactory) {
+      return null as any;
+    }
+    return this.workerFactory();
+  }
+}
+
+export function createLanguageAdapter(
+  name: string,
+  workerFactory: () => Worker
+): BaseAdapter {
+  return new GenericLanguageAdapter(name, workerFactory);
+}
