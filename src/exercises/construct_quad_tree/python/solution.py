@@ -10,28 +10,27 @@ class Node:
         self.bottomRight = bottomRight
 """
 
-class Solution:
-    def construct(self, grid: List[List[int]]) -> 'Node':
-        leafNodes = {
-            0: Node(False, True),
-            1: Node(True, True)
-        }
+def construct(grid: List[List[int]]) -> 'Node':
+    leafNodes = {
+        0: Node(False, True),
+        1: Node(True, True)
+    }
 
-        def dfs(n, r, c):
-            if n == 1:
-                return leafNodes[grid[r][c]]
+    def dfs(n, r, c):
+        if n == 1:
+            return leafNodes[grid[r][c]]
 
-            n //= 2
-            topLeft = dfs(n, r, c)
-            topRight = dfs(n, r, c + n)
-            bottomLeft = dfs(n, r + n, c)
-            bottomRight = dfs(n, r + n, c + n)
+        n //= 2
+        topLeft = dfs(n, r, c)
+        topRight = dfs(n, r, c + n)
+        bottomLeft = dfs(n, r + n, c)
+        bottomRight = dfs(n, r + n, c + n)
 
-            if (topLeft.isLeaf and topRight.isLeaf and 
-                bottomLeft.isLeaf and bottomRight.isLeaf and
-                topLeft.val == topRight.val == bottomLeft.val == bottomRight.val):
-                return topLeft
+        if (topLeft.isLeaf and topRight.isLeaf and 
+            bottomLeft.isLeaf and bottomRight.isLeaf and
+            topLeft.val == topRight.val == bottomLeft.val == bottomRight.val):
+            return topLeft
 
-            return Node(False, False, topLeft, topRight, bottomLeft, bottomRight)
+        return Node(False, False, topLeft, topRight, bottomLeft, bottomRight)
 
-        return dfs(len(grid), 0, 0)
+    return dfs(len(grid), 0, 0)
