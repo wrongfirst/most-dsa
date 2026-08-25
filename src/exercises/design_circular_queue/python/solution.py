@@ -1,7 +1,7 @@
 class ListNode:
-    def __init__(self, val, nxt=None):
+    def __init__(self, val: int = 0, next: Optional['ListNode'] = None):
         self.val = val
-        self.next = nxt
+        self.next = next
 
 class MyCircularQueue:
     def __init__(self, k: int):
@@ -10,7 +10,8 @@ class MyCircularQueue:
         self.right = self.left
         
     def enQueue(self, value: int) -> bool:
-        if self.isFull(): return False
+        if self.isFull():
+            return False
             
         cur = ListNode(value)
         if self.isEmpty():
@@ -24,7 +25,8 @@ class MyCircularQueue:
         return True
         
     def deQueue(self) -> bool:
-        if self.isEmpty(): return False
+        if self.isEmpty() or not self.left.next:
+            return False
             
         self.left.next = self.left.next.next
         if self.left.next is None:
@@ -34,11 +36,13 @@ class MyCircularQueue:
         return True
         
     def Front(self) -> int:
-        if self.isEmpty(): return -1
+        if self.isEmpty() or not self.left.next:
+            return -1
         return self.left.next.val
         
     def Rear(self) -> int:
-        if self.isEmpty(): return -1
+        if self.isEmpty():
+            return -1
         return self.right.val
         
     def isEmpty(self) -> bool:

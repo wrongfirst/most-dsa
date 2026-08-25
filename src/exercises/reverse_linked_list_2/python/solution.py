@@ -4,19 +4,26 @@
 #         self.val = val
 #         self.next = next
 def reverseBetween(head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+    if not head or left == right:
+        return head
+
     dummy = ListNode(0, head)
-    leftPrev, cur = dummy, head
+    leftPrev: ListNode = dummy
+    cur = head
 
     for _ in range(left - 1):
-        leftPrev, cur = cur, cur.next
+        if cur:
+            leftPrev, cur = cur, cur.next
 
-    prev = None
+    prev: Optional[ListNode] = None
     for _ in range(right - left + 1):
-        tmpNext = cur.next
-        cur.next = prev
-        prev, cur = cur, tmpNext
+        if cur:
+            tmpNext = cur.next
+            cur.next = prev
+            prev, cur = cur, tmpNext
 
-    leftPrev.next.next = cur
+    if leftPrev.next:
+        leftPrev.next.next = cur
     leftPrev.next = prev
 
     return dummy.next

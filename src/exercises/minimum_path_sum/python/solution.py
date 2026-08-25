@@ -7,4 +7,4 @@ def minPathSum(grid: list[list[int]]) -> int:
         for c in range(COLS - 1, -1, -1):
             dp[c] = grid[r][c] + min(dp[c], dp[c + 1])
 
-    return dp[0]
+    return int(dp[0])

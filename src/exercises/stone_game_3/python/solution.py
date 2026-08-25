@@ -1,6 +1,6 @@
 def stoneGameIII(stoneValue: list[int]) -> str:
     n = len(stoneValue)
-    dp = [0] * 4
+    dp: list[float] = [0.0] * 4
 
     for i in range(n - 1, -1, -1):
         total = 0

@@ -1,5 +1,5 @@
-class ListNode:
-    def __init__(self, key = -1, val = -1, next = None):
+class MapNode:
+    def __init__(self, key: int = -1, val: int = -1, next: Optional['MapNode'] = None):
         self.key = key
         self.val = val
         self.next = next
@@ -7,7 +7,7 @@ class ListNode:
 class MyHashMap:
 
     def __init__(self):
-        self.map = [ListNode() for _ in range(1000)]
+        self.map = [MapNode() for _ in range(1000)]
     
     def hash(self, key: int) -> int:
         return key % len(self.map)
@@ -19,7 +19,7 @@ class MyHashMap:
                 cur.next.val = value
                 return
             cur = cur.next
-        cur.next = ListNode(key, value)
+        cur.next = MapNode(key, value)
 
     def get(self, key: int) -> int:
         cur = self.map[self.hash(key)].next
@@ -36,3 +36,4 @@ class MyHashMap:
                 cur.next = cur.next.next
                 return
             cur = cur.next
+

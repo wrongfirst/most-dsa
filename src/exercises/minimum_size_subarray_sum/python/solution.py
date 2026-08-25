@@ -1,6 +1,6 @@
 def minSubArrayLen(target: int, nums: list[int]) -> int:
     l, total = 0, 0
-    res = float("inf")
+    res = len(nums) + 1
 
     for r in range(len(nums)):
         total += nums[r]
@@ -9,4 +9,4 @@ def minSubArrayLen(target: int, nums: list[int]) -> int:
             total -= nums[l]
             l += 1
 
-    return 0 if res == float("inf") else res
+    return 0 if res > len(nums) else res
