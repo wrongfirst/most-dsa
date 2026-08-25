@@ -19,4 +19,4 @@ Output: ["r","a","c","e","c","a","r"]
 
 **Constraints:**
 * `1 <= s.length < 100,000`
-* `s[i]` is a <a href="https://en.wikipedia.org/wiki/ASCII#Printable_characters" target="_blank" rel="noopener noreferrer">printable ascii character</a>.
+* `s[i]` is a [printable ascii character](https://en.wikipedia.org/wiki/ASCII#Printable_characters).

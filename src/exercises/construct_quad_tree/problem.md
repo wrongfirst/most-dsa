@@ -29,7 +29,7 @@ We can construct a Quad-Tree from a two-dimensional area using the following ste
 
 ![](https://imagedelivery.net/CLfkmk9Wzy8_9HRyug4EVA/afaa2b4a-f470-4b3b-c1eb-e3528bbe0500/public)
 
-If you want to know more about the Quad-Tree, you can refer to the <a href="https://en.wikipedia.org/wiki/Quadtree" target="_blank">wiki</a>.
+If you want to know more about the Quad-Tree, you can refer to the [wiki](https://en.wikipedia.org/wiki/Quadtree).
 
 **Quad-Tree format:**
 
