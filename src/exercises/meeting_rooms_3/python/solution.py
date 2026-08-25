@@ -1,4 +1,4 @@
-def mostBooked(n: int, meetings: List[List[int]]) -> int:
+def mostBooked(n: int, meetings: list[list[int]]) -> int:
     meetings.sort()
     available = []
     count = [0] * n

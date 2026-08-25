@@ -1,4 +1,4 @@
-def combinationSum4(nums: List[int], target: int) -> int:
+def combinationSum4(nums: list[int], target: int) -> int:
     nums.sort()
     dp = defaultdict(int)
     dp[target] = 1

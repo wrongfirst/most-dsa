@@ -1,4 +1,4 @@
-def minSubArrayLen(target: int, nums: List[int]) -> int:
+def minSubArrayLen(target: int, nums: list[int]) -> int:
     l, total = 0, 0
     res = float("inf")
 

@@ -1,4 +1,4 @@
-def stoneGameII(piles: List[int]) -> int:
+def stoneGameII(piles: list[int]) -> int:
     n = len(piles)
     suffix_sum = [0] * n
     suffix_sum[-1] = piles[-1]

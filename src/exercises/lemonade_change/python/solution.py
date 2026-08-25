@@ -1,4 +1,4 @@
-def lemonadeChange(bills: List[int]) -> bool:
+def lemonadeChange(bills: list[int]) -> bool:
     five, ten = 0, 0
     for b in bills:
         if b == 5:

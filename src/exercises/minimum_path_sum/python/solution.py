@@ -1,4 +1,4 @@
-def minPathSum(grid: List[List[int]]) -> int:
+def minPathSum(grid: list[list[int]]) -> int:
     ROWS, COLS = len(grid), len(grid[0])
     dp = [float("inf")] * (COLS + 1)
     dp[COLS - 1] = 0

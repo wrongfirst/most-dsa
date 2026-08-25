@@ -1,4 +1,4 @@
-def reverseString(s: List[str]) -> None:
+def reverseString(s: list[str]) -> None:
     """
     Do not return anything, modify s in-place instead.
     """

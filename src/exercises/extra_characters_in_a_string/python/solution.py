@@ -15,7 +15,7 @@ class Trie:
             curr = curr.children[c]
         curr.isWord = True
 
-def minExtraChar(s: str, dictionary: List[str]) -> int:
+def minExtraChar(s: str, dictionary: list[str]) -> int:
     trie = Trie()
     for w in dictionary:
         trie.addWord(w)

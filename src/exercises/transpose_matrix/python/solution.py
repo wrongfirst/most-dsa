@@ -1,4 +1,4 @@
-def transpose(matrix: List[List[int]]) -> List[List[int]]:
+def transpose(matrix: list[list[int]]) -> list[list[int]]:
     ROWS, COLS = len(matrix), len(matrix[0])
 
     if ROWS == COLS:

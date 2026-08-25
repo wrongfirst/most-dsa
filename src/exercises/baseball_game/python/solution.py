@@ -1,4 +1,4 @@
-def calPoints(operations: List[str]) -> int:
+def calPoints(operations: list[str]) -> int:
     stack = []
     for op in operations:
         if op == "+":

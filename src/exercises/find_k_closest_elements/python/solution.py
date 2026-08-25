@@ -1,4 +1,4 @@
-def findClosestElements(arr: List[int], k: int, x: int) -> List[int]:
+def findClosestElements(arr: list[int], k: int, x: int) -> list[int]:
     l, r = 0, len(arr) - k
     while l < r:
         m = (l + r) // 2

@@ -1,4 +1,4 @@
-def lastStoneWeightII(stones: List[int]) -> int:
+def lastStoneWeightII(stones: list[int]) -> int:
     stoneSum = sum(stones)
     target = stoneSum // 2
     dp = {0}

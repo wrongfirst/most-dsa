@@ -1,4 +1,4 @@
-def canTraverseAllPairs(nums: List[int]) -> bool:
+def canTraverseAllPairs(nums: list[int]) -> bool:
     N = len(nums)
     if N == 1:
         return True

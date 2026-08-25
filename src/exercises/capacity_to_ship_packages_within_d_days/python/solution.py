@@ -1,4 +1,4 @@
-def shipWithinDays(weights: List[int], days: int) -> int:
+def shipWithinDays(weights: list[int], days: int) -> int:
     l, r = max(weights), sum(weights)
     res = r
 

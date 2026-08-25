@@ -1,4 +1,4 @@
-def longestCommonPrefix(strs: List[str]) -> str:
+def longestCommonPrefix(strs: list[str]) -> str:
     prefix = strs[0]
     for i in range(1, len(strs)):
         j = 0

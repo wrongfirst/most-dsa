@@ -1,4 +1,4 @@
-def canPartitionKSubsets(nums: List[int], k: int) -> bool:
+def canPartitionKSubsets(nums: list[int], k: int) -> bool:
     total = sum(nums)
     if total % k != 0:
         return False

@@ -1,4 +1,4 @@
-def checkIfPrerequisite(numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[bool]:
+def checkIfPrerequisite(numCourses: int, prerequisites: list[list[int]], queries: list[list[int]]) -> list[bool]:
     adj = [set() for _ in range(numCourses)]
     indegree = [0] * numCourses
     isPrereq = [set() for _ in range(numCourses)]

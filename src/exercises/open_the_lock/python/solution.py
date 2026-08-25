@@ -1,4 +1,4 @@
-def openLock(deadends: List[str], target: str) -> int:
+def openLock(deadends: list[str], target: str) -> int:
     if target == "0000":
         return 0
 

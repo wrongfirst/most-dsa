@@ -4,7 +4,7 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-def postorderTraversal(root: Optional[TreeNode]) -> List[int]:
+def postorderTraversal(root: Optional[TreeNode]) -> list[int]:
     res = []
 
     def postorder(node):

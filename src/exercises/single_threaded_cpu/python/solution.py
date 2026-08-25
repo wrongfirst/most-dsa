@@ -1,4 +1,4 @@
-def getOrder(tasks: List[List[int]]) -> List[int]:
+def getOrder(tasks: list[list[int]]) -> list[int]:
     for i, t in enumerate(tasks):
         t.append(i)
     tasks.sort(key=lambda t: t[0])

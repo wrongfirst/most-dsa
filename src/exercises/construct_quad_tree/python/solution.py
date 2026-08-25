@@ -10,7 +10,7 @@ class Node:
         self.bottomRight = bottomRight
 """
 
-def construct(grid: List[List[int]]) -> 'Node':
+def construct(grid: list[list[int]]) -> 'Node':
     leafNodes = {
         0: Node(False, True),
         1: Node(True, True)

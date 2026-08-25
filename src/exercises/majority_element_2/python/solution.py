@@ -1,4 +1,4 @@
-def majorityElement(nums: List[int]) -> List[int]:
+def majorityElement(nums: list[int]) -> list[int]:
     count = defaultdict(int)
     
     for num in nums:

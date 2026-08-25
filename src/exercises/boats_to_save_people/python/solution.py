@@ -1,4 +1,4 @@
-def numRescueBoats(people: List[int], limit: int) -> int:
+def numRescueBoats(people: list[int], limit: int) -> int:
     people.sort()
     res, l, r = 0, 0, len(people) - 1
     while l <= r:

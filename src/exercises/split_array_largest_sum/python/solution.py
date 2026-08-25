@@ -1,4 +1,4 @@
-def splitArray(nums: List[int], k: int) -> int:
+def splitArray(nums: list[int], k: int) -> int:
     n = len(nums)
     prefix = [0] * (n + 1)
     for i in range(n):

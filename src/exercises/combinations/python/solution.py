@@ -1,4 +1,4 @@
-def combine(n: int, k: int) -> List[List[int]]:
+def combine(n: int, k: int) -> list[list[int]]:
     res = []
 
     def backtrack(start, comb):

@@ -1,4 +1,4 @@
-def calcEquation(equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+def calcEquation(equations: list[list[str]], values: list[float], queries: list[list[str]]) -> list[float]:
     adj = collections.defaultdict(list)  # Map a -> list of [b, a/b]
 
     for i, eq in enumerate(equations):

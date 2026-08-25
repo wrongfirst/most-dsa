@@ -1,2 +1,2 @@
-def stoneGame(piles: List[int]) -> bool:
+def stoneGame(piles: list[int]) -> bool:
     return True

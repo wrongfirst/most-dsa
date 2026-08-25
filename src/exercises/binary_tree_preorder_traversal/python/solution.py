@@ -4,7 +4,7 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-def preorderTraversal(root: Optional[TreeNode]) -> List[int]:
+def preorderTraversal(root: Optional[TreeNode]) -> list[int]:
     res = []
     cur = root
 

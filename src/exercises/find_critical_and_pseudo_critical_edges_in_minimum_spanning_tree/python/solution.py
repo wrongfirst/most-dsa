@@ -19,7 +19,7 @@ class UnionFind:
         self.Parent[pv] = pu
         return True
 
-def findCriticalAndPseudoCriticalEdges(n: int, edges: List[List[int]]) -> List[List[int]]:
+def findCriticalAndPseudoCriticalEdges(n: int, edges: list[list[int]]) -> list[list[int]]:
     mst = [[] for _ in range(n)]
     mstEdge = []
     

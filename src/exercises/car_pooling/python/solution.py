@@ -1,4 +1,4 @@
-def carPooling(trips: List[List[int]], capacity: int) -> bool:
+def carPooling(trips: list[list[int]], capacity: int) -> bool:
     trips.sort(key=lambda t: t[1])
     
     minHeap = []  # pair of [end, numPassengers]

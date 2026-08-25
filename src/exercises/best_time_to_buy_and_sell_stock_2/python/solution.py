@@ -1,4 +1,4 @@
-def maxProfit(prices: List[int]) -> int:
+def maxProfit(prices: list[int]) -> int:
     profit = 0
 
     for i in range(1, len(prices)):

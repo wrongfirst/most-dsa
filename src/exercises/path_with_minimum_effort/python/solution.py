@@ -1,4 +1,4 @@
-def minimumEffortPath(heights: List[List[int]]) -> int:
+def minimumEffortPath(heights: list[list[int]]) -> int:
     ROWS, COLS = len(heights), len(heights[0])
     minHeap = [[0, 0, 0]]  # [diff, row, col]
     visit = set()

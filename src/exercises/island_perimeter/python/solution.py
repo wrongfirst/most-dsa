@@ -1,4 +1,4 @@
-def islandPerimeter(grid: List[List[int]]) -> int:
+def islandPerimeter(grid: list[list[int]]) -> int:
     m, n = len(grid), len(grid[0])
     res = 0
     for r in range(m):

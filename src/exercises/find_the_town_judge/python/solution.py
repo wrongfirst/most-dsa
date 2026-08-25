@@ -1,4 +1,4 @@
-def findJudge(n: int, trust: List[List[int]]) -> int:
+def findJudge(n: int, trust: list[list[int]]) -> int:
     delta = defaultdict(int)
 
     for src, dst in trust:

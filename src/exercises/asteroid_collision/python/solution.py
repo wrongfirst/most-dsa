@@ -1,4 +1,4 @@
-def asteroidCollision(asteroids: List[int]) -> List[int]:
+def asteroidCollision(asteroids: list[int]) -> list[int]:
     n = len(asteroids)
     j = -1
 

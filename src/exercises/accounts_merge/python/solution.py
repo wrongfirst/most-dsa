@@ -21,7 +21,7 @@ class UnionFind:
             self.rank[p2] += self.rank[p1]
         return True
 
-def accountsMerge(accounts: List[List[str]]) -> List[List[str]]:
+def accountsMerge(accounts: list[list[str]]) -> list[list[str]]:
     uf = UnionFind(len(accounts))
     emailToAcc = {}  # email -> index of acc
 

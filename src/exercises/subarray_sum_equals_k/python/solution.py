@@ -1,4 +1,4 @@
-def subarraySum(nums: List[int], k: int) -> int:
+def subarraySum(nums: list[int], k: int) -> int:
     res = curSum = 0
     prefixSums = { 0 : 1 }
 

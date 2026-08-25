@@ -1,4 +1,4 @@
-def wordBreak(s: str, wordDict: List[str]) -> List[str]:
+def wordBreak(s: str, wordDict: list[str]) -> list[str]:
     wordSet = set(wordDict)
     n = len(s)
     dp = [[] for _ in range(n + 1)]

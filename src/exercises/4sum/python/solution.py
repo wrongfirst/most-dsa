@@ -1,4 +1,4 @@
-def fourSum(nums: List[int], target: int) -> List[List[int]]:
+def fourSum(nums: list[int], target: int) -> list[list[int]]:
     nums.sort()
     n = len(nums)
     res = []

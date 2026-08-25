@@ -1,4 +1,4 @@
-def isAlienSorted(words: List[str], order: str) -> bool:
+def isAlienSorted(words: list[str], order: str) -> bool:
     order_index = {c: i for i, c in enumerate(order)}
     
     for i in range(len(words) - 1):

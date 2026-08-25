@@ -1,4 +1,4 @@
-def makesquare(matchsticks: List[int]) -> bool:
+def makesquare(matchsticks: list[int]) -> bool:
     total_length = sum(matchsticks)
     if total_length % 4 != 0:
         return False

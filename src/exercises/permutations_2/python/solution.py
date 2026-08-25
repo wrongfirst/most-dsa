@@ -1,4 +1,4 @@
-def permuteUnique(nums: List[int]) -> List[List[int]]:
+def permuteUnique(nums: list[int]) -> list[list[int]]:
     res = []
 
     def dfs(i):

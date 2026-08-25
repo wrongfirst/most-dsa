@@ -1,4 +1,4 @@
-def buildMatrix(k: int, rowConditions: List[List[int]], colConditions: List[List[int]]) -> List[List[int]]:
+def buildMatrix(k: int, rowConditions: list[list[int]], colConditions: list[list[int]]) -> list[list[int]]:
     def topo_sort(edges):
         indegree = [0] * (k + 1)
         adj = [[] for _ in range(k + 1)]

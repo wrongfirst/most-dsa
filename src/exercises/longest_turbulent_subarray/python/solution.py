@@ -1,4 +1,4 @@
-def maxTurbulenceSize(arr: List[int]) -> int:
+def maxTurbulenceSize(arr: list[int]) -> int:
     n = len(arr)
     res = cnt = 0
     sign = -1

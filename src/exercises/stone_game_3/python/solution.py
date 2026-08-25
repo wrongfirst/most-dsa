@@ -1,4 +1,4 @@
-def stoneGameIII(stoneValue: List[int]) -> str:
+def stoneGameIII(stoneValue: list[int]) -> str:
     n = len(stoneValue)
     dp = [0] * 4
 

@@ -1,4 +1,4 @@
-def findMinHeightTrees(n: int, edges: List[List[int]]) -> List[int]:
+def findMinHeightTrees(n: int, edges: list[list[int]]) -> list[int]:
     if n == 1:
         return [0]
 

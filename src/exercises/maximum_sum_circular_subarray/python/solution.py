@@ -1,4 +1,4 @@
-def maxSubarraySumCircular(nums: List[int]) -> int:
+def maxSubarraySumCircular(nums: list[int]) -> int:
     globMax, globMin = nums[0], nums[0]
     curMax, curMin = 0, 0
     total = 0

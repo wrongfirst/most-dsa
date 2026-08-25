@@ -1,4 +1,4 @@
-def uniquePathsWithObstacles(grid: List[List[int]]) -> int:
+def uniquePathsWithObstacles(grid: list[list[int]]) -> int:
     M, N = len(grid), len(grid[0])
     if grid[0][0] == 1 or grid[M - 1][N - 1] == 1:
         return 0

@@ -1,4 +1,4 @@
-def findMaximizedCapital(k: int, w: int, profits: List[int], capital: List[int]) -> int:
+def findMaximizedCapital(k: int, w: int, profits: list[int], capital: list[int]) -> int:
     n = len(profits)
     indices = list(range(n))
     indices.sort(key=lambda i: capital[i])

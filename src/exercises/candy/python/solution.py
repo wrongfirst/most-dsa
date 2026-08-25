@@ -1,4 +1,4 @@
-def candy(ratings: List[int]) -> int:
+def candy(ratings: list[int]) -> int:
     n = len(ratings)
     res = n
 
