@@ -1,136 +1,136 @@
 chapters:
   "Arrays & Hashing":
-    - concatenation-of-array
-    - design-hashmap
-    - design-hashset
-    - longest-common-prefix
-    - majority-element
-    - remove-element
-    - best-time-to-buy-and-sell-stock-ii
-    - majority-element-ii
-    - range-sum-query-2d-immutable
-    - sort-an-array
-    - sort-colors
-    - subarray-sum-equals-k
-    - first-missing-positive
+    - concatenation_of_array
+    - design_hashmap
+    - design_hashset
+    - longest_common_prefix
+    - majority_element
+    - remove_element
+    - best_time_to_buy_and_sell_stock_2
+    - majority_element_2
+    - range_sum_query_2d_immutable
+    - sort_an_array
+    - sort_colors
+    - subarray_sum_equals_k
+    - first_missing_positive
 
   "Two Pointers":
-    - merge-sorted-array
-    - merge-strings-alternately
-    - remove-duplicates-from-sorted-array
-    - reverse-string
-    - valid-palindrome-ii
+    - merge_sorted_array
+    - merge_strings_alternately
+    - remove_duplicates_from_sorted_array
+    - reverse_string
+    - valid_palindrome_2
     - 4sum
-    - boats-to-save-people
-    - rotate-array
+    - boats_to_save_people
+    - rotate_array
 
   "Sliding Window":
-    - contains-duplicate-ii
-    - find-k-closest-elements
-    - minimum-size-subarray-sum
+    - contains_duplicate_2
+    - find_k_closest_elements
+    - minimum_size_subarray_sum
 
   "Stack":
-    - baseball-game
-    - implement-queue-using-stacks
-    - implement-stack-using-queues
-    - asteroid-collision
-    - decode-string
-    - online-stock-span
-    - simplify-path
-    - maximum-frequency-stack
+    - baseball_game
+    - implement_queue_using_stacks
+    - implement_stack_using_queues
+    - asteroid_collision
+    - decode_string
+    - online_stock_span
+    - simplify_path
+    - maximum_frequency_stack
 
   "Binary Search":
-    - guess-number-higher-or-lower
-    - search-insert-position
+    - guess_number_higher_or_lower
+    - search_insert_position
     - sqrtx
-    - capacity-to-ship-packages-within-d-days
-    - search-in-rotated-sorted-array-ii
-    - find-in-mountain-array
-    - split-array-largest-sum
+    - capacity_to_ship_packages_within_d_days
+    - search_in_rotated_sorted_array_2
+    - find_in_mountain_array
+    - split_array_largest_sum
 
   "Linked List":
-    - design-circular-queue
-    - reverse-linked-list-ii
-    - lfu-cache
+    - design_circular_queue
+    - reverse_linked_list_2
+    - lfu_cache
 
   "Trees":
-    - binary-tree-inorder-traversal
-    - binary-tree-postorder-traversal
-    - binary-tree-preorder-traversal
-    - construct-quad-tree
-    - delete-leaves-with-a-given-value
-    - delete-node-in-a-bst
-    - house-robber-iii
-    - insert-into-a-binary-search-tree
+    - binary_tree_inorder_traversal
+    - binary_tree_postorder_traversal
+    - binary_tree_preorder_traversal
+    - construct_quad_tree
+    - delete_leaves_with_a_given_value
+    - delete_node_in_a_bst
+    - house_robber_3
+    - insert_into_a_binary_search_tree
 
   "Tries":
-    - extra-characters-in-a-string
+    - extra_characters_in_a_string
 
   "Heap / Priority Queue":
-    - car-pooling
-    - longest-happy-string
-    - reorganize-string
-    - single-threaded-cpu
+    - car_pooling
+    - longest_happy_string
+    - reorganize_string
+    - single_threaded_cpu
     - ipo
 
   "Backtracking":
-    - sum-of-all-subset-xor-totals
+    - sum_of_all_subset_xor_totals
     - combinations
-    - matchsticks-to-square
-    - partition-to-k-equal-sum-subsets
-    - permutations-ii
-    - n-queens-ii
-    - word-break-ii
+    - matchsticks_to_square
+    - partition_to_k_equal_sum_subsets
+    - permutations_2
+    - n_queens_2
+    - word_break_2
 
   "Graphs":
-    - find-the-town-judge
-    - island-perimeter
-    - verifying-an-alien-dictionary
-    - accounts-merge
-    - course-schedule-iv
-    - evaluate-division
-    - minimum-height-trees
-    - open-the-lock
+    - find_the_town_judge
+    - island_perimeter
+    - verifying_an_alien_dictionary
+    - accounts_merge
+    - course_schedule_4
+    - evaluate_division
+    - minimum_height_trees
+    - open_the_lock
 
   "Advanced Graphs":
-    - path-with-minimum-effort
-    - build-a-matrix-with-conditions
-    - find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree
-    - greatest-common-divisor-traversal
+    - path_with_minimum_effort
+    - build_a_matrix_with_conditions
+    - find_critical_and_pseudo_critical_edges_in_minimum_spanning_tree
+    - greatest_common_divisor_traversal
 
   "1-D Dynamic Programming":
-    - n-th-tribonacci-number
-    - combination-sum-iv
-    - integer-break
-    - perfect-squares
-    - stone-game-iii
+    - n_th_tribonacci_number
+    - combination_sum_4
+    - integer_break
+    - perfect_squares
+    - stone_game_3
 
   "2-D Dynamic Programming":
-    - last-stone-weight-ii
-    - minimum-path-sum
-    - stone-game
-    - stone-game-ii
-    - unique-paths-ii
+    - last_stone_weight_2
+    - minimum_path_sum
+    - stone_game
+    - stone_game_2
+    - unique_paths_2
 
   "Greedy":
-    - lemonade-change
-    - dota2-senate
-    - jump-game-vii
-    - longest-turbulent-subarray
-    - maximum-sum-circular-subarray
+    - lemonade_change
+    - dota2_senate
+    - jump_game_7
+    - longest_turbulent_subarray
+    - maximum_sum_circular_subarray
     - candy
 
   "Intervals":
-    - meeting-rooms-iii
+    - meeting_rooms_3
 
   "Math & Geometry":
-    - excel-sheet-column-title
-    - greatest-common-divisor-of-strings
-    - roman-to-integer
-    - transpose-matrix
-    - insert-greatest-common-divisors-in-linked-list
+    - excel_sheet_column_title
+    - greatest_common_divisor_of_strings
+    - roman_to_integer
+    - transpose_matrix
+    - insert_greatest_common_divisors_in_linked_list
 
   "Bit Manipulation":
-    - add-binary
-    - bitwise-and-of-numbers-range
-    - minimum-array-end
+    - add_binary
+    - bitwise_and_of_numbers_range
+    - minimum_array_end
