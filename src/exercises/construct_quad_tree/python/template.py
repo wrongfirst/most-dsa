@@ -1,13 +1,13 @@
 # Definition for a QuadTree node.
-class Node:
+class QuadNode:
     def __init__(
         self,
         val: bool,
         isLeaf: bool,
-        topLeft: Optional['Node'] = None,
-        topRight: Optional['Node'] = None,
-        bottomLeft: Optional['Node'] = None,
-        bottomRight: Optional['Node'] = None,
+        topLeft: Optional['QuadNode'] = None,
+        topRight: Optional['QuadNode'] = None,
+        bottomLeft: Optional['QuadNode'] = None,
+        bottomRight: Optional['QuadNode'] = None,
     ):
         self.val = val
         self.isLeaf = isLeaf
@@ -16,5 +16,5 @@ class Node:
         self.bottomLeft = bottomLeft
         self.bottomRight = bottomRight
 
-def construct(grid: list[list[int]]) -> Optional[Node]:
-    pass
+def construct(grid: list[list[int]]) -> Optional[QuadNode]:
+    ...

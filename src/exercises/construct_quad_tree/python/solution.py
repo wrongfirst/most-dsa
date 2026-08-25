@@ -1,13 +1,13 @@
 # Definition for a QuadTree node.
-class Node:
+class QuadNode:
     def __init__(
         self,
         val: bool,
         isLeaf: bool,
-        topLeft: Optional['Node'] = None,
-        topRight: Optional['Node'] = None,
-        bottomLeft: Optional['Node'] = None,
-        bottomRight: Optional['Node'] = None,
+        topLeft: Optional['QuadNode'] = None,
+        topRight: Optional['QuadNode'] = None,
+        bottomLeft: Optional['QuadNode'] = None,
+        bottomRight: Optional['QuadNode'] = None,
     ):
         self.val = val
         self.isLeaf = isLeaf
@@ -16,13 +16,13 @@ class Node:
         self.bottomLeft = bottomLeft
         self.bottomRight = bottomRight
 
-def construct(grid: list[list[int]]) -> Optional[Node]:
+def construct(grid: list[list[int]]) -> Optional[QuadNode]:
     leafNodes = {
-        0: Node(False, True),
-        1: Node(True, True)
+        0: QuadNode(False, True),
+        1: QuadNode(True, True)
     }
 
-    def dfs(n: int, r: int, c: int) -> Node:
+    def dfs(n: int, r: int, c: int) -> QuadNode:
         if n == 1:
             return leafNodes[grid[r][c]]
 
@@ -37,6 +37,6 @@ def construct(grid: list[list[int]]) -> Optional[Node]:
             topLeft.val == topRight.val == bottomLeft.val == bottomRight.val):
             return topLeft
 
-        return Node(False, False, topLeft, topRight, bottomLeft, bottomRight)
+        return QuadNode(False, False, topLeft, topRight, bottomLeft, bottomRight)
 
     return dfs(len(grid), 0, 0)

@@ -3,9 +3,9 @@
 # """
 class MountainArray:
     def get(self, index: int) -> int:
-        pass
+        return 0
     def length(self) -> int:
-        pass
+        return 0
 
 def findInMountainArray(target: int, mountainArr: 'MountainArray') -> int:
     length = mountainArr.length()

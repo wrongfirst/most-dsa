@@ -9,7 +9,7 @@ def reverseBetween(head: Optional[ListNode], left: int, right: int) -> Optional[
 
     dummy = ListNode(0, head)
     leftPrev: ListNode = dummy
-    cur = head
+    cur: Optional[ListNode] = head
 
     for _ in range(left - 1):
         if cur:

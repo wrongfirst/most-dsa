@@ -5,4 +5,4 @@
 #         self.next = next
 
 def reverseBetween(head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
-    pass
+    ...
