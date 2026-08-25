@@ -1,9 +1,14 @@
 func splitArray(nums []int, k int) int {
 	n := len(nums)
 	prefix := make([]int, n+1)
+	maxNum, sumNum := nums[0], 0
 
 	for i := 0; i < n; i++ {
 		prefix[i+1] = prefix[i] + nums[i]
+		if nums[i] > maxNum {
+			maxNum = nums[i]
+		}
+		sumNum += nums[i]
 	}
 
 	canSplit := func(largest int) bool {
@@ -34,7 +39,7 @@ func splitArray(nums []int, k int) int {
 		return true
 	}
 
-	l, r := max(nums...), sum(nums)
+	l, r := maxNum, sumNum
 	res := r
 
 	for l <= r {
@@ -51,20 +56,3 @@ func splitArray(nums []int, k int) int {
 	return res
 }
 
-func max(nums ...int) int {
-	maxVal := nums[0]
-	for _, num := range nums {
-		if num > maxVal {
-			maxVal = num
-		}
-	}
-	return maxVal
-}
-
-func sum(nums []int) int {
-	total := 0
-	for _, num := range nums {
-		total += num
-	}
-	return total
-}

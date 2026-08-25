@@ -1,5 +1,12 @@
 func shipWithinDays(weights []int, days int) int {
-	l, r := max(weights...), sum(weights)
+	maxW, totalW := 0, 0
+	for _, w := range weights {
+		if w > maxW {
+			maxW = w
+		}
+		totalW += w
+	}
+	l, r := maxW, totalW
 	res := r
 
 	canShip := func(cap int) bool {
@@ -33,20 +40,3 @@ func shipWithinDays(weights []int, days int) int {
 	return res
 }
 
-func max(nums ...int) int {
-	maxVal := nums[0]
-	for _, num := range nums {
-		if num > maxVal {
-			maxVal = num
-		}
-	}
-	return maxVal
-}
-
-func sum(nums []int) int {
-	total := 0
-	for _, num := range nums {
-		total += num
-	}
-	return total
-}

@@ -1,16 +1,16 @@
-type ListNode struct {
+type QueueNode struct {
 	val  int
-	next *ListNode
+	next *QueueNode
 }
 
 type MyCircularQueue struct {
 	space int
-	left  *ListNode
-	right *ListNode
+	left  *QueueNode
+	right *QueueNode
 }
 
 func Constructor(k int) MyCircularQueue {
-	left := &ListNode{val: 0}
+	left := &QueueNode{val: 0}
 	return MyCircularQueue{
 		space: k,
 		left:  left,
@@ -23,7 +23,7 @@ func (this *MyCircularQueue) EnQueue(value int) bool {
 		return false
 	}
 
-	cur := &ListNode{val: value}
+	cur := &QueueNode{val: value}
 
 	if this.IsEmpty() {
 		this.left.next = cur
@@ -73,3 +73,4 @@ func (this *MyCircularQueue) IsEmpty() bool {
 func (this *MyCircularQueue) IsFull() bool {
 	return this.space == 0
 }
+

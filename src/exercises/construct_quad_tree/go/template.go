@@ -1,15 +1,13 @@
-/**
- * Definition for a QuadTree node.
- * type Node struct {
- *     Val bool
- *     IsLeaf bool
- *     TopLeft *Node
- *     TopRight *Node
- *     BottomLeft *Node
- *     BottomRight *Node
- * }
- */
+type QuadNode struct {
+	Val         bool
+	IsLeaf      bool
+	TopLeft     *QuadNode
+	TopRight    *QuadNode
+	BottomLeft  *QuadNode
+	BottomRight *QuadNode
+}
 
-func construct(grid [][]int) *Node {
+func construct(grid [][]int) *QuadNode {
 
 }
+

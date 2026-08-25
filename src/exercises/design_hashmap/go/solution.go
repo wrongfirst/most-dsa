@@ -1,17 +1,17 @@
-type ListNode struct {
+type HashNode struct {
     key  int
     val  int
-    next *ListNode
+    next *HashNode
 }
 
 type MyHashMap struct {
-    hashMap []*ListNode
+    hashMap []*HashNode
 }
 
 func Constructor() MyHashMap {
-    hashMap := make([]*ListNode, 1000)
+    hashMap := make([]*HashNode, 1000)
     for i := 0; i < 1000; i++ {
-        hashMap[i] = &ListNode{key: -1, val: -1}
+        hashMap[i] = &HashNode{key: -1, val: -1}
     }
     return MyHashMap{hashMap: hashMap}
 }
@@ -29,7 +29,7 @@ func (this *MyHashMap) Put(key int, value int) {
         }
         cur = cur.next
     }
-    cur.next = &ListNode{key: key, val: value}
+    cur.next = &HashNode{key: key, val: value}
 }
 
 func (this *MyHashMap) Get(key int) int {
@@ -53,3 +53,4 @@ func (this *MyHashMap) Remove(key int) {
         cur = cur.next
     }
 }
+

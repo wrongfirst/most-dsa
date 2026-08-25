@@ -1,23 +1,23 @@
-type ListNode struct {
+type LFUNode struct {
 	val  int
-	prev *ListNode
-	next *ListNode
+	prev *LFUNode
+	next *LFUNode
 }
 
 type LinkedList struct {
-	left  *ListNode
-	right *ListNode
-	m     map[int]*ListNode
+	left  *LFUNode
+	right *LFUNode
+	m     map[int]*LFUNode
 }
 
 func newLinkedList() *LinkedList {
-	left := &ListNode{val: 0}
-	right := &ListNode{val: 0, prev: left}
+	left := &LFUNode{val: 0}
+	right := &LFUNode{val: 0, prev: left}
 	left.next = right
 	return &LinkedList{
 		left:  left,
 		right: right,
-		m:     make(map[int]*ListNode),
+		m:     make(map[int]*LFUNode),
 	}
 }
 
@@ -26,7 +26,7 @@ func (this *LinkedList) length() int {
 }
 
 func (this *LinkedList) pushRight(val int) {
-	node := &ListNode{val: val, prev: this.right.prev, next: this.right}
+	node := &LFUNode{val: val, prev: this.right.prev, next: this.right}
 	this.m[val] = node
 	this.right.prev = node
 	node.prev.next = node

@@ -22,9 +22,3 @@ func stoneGameII(piles []int) int {
 	return dp[0][1]
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}

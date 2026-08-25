@@ -1,14 +1,15 @@
-/**
- * // This is the MountainArray's API interface.
- * // You should not implement it, or speculate about its implementation
- * type MountainArray struct {
- * }
- *
- * func (this *MountainArray) get(index int) int {}
- * func (this *MountainArray) length() int {}
- */
+type MountainArray struct {
+}
 
- func findInMountainArray(target int, mountainArr *MountainArray) int {
+func (this *MountainArray) get(index int) int {
+	return 0
+}
+
+func (this *MountainArray) length() int {
+	return 0
+}
+
+func findInMountainArray(target int, mountainArr *MountainArray) int {
     length := mountainArr.length()
 
     l, r := 0, length-1

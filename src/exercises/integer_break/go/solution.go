@@ -9,9 +9,3 @@ func integerBreak(n int) int {
 	return res * max(1, n%3)
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}

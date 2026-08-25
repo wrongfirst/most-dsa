@@ -15,16 +15,3 @@ func maxSubarraySumCircular(nums []int) int {
 	return globMax
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}

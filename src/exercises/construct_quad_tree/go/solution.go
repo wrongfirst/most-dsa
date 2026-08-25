@@ -1,23 +1,20 @@
-/**
- * Definition for a QuadTree node.
- * type Node struct {
- *     Val bool
- *     IsLeaf bool
- *     TopLeft *Node
- *     TopRight *Node
- *     BottomLeft *Node
- *     BottomRight *Node
- * }
- */
+type QuadNode struct {
+	Val         bool
+	IsLeaf      bool
+	TopLeft     *QuadNode
+	TopRight    *QuadNode
+	BottomLeft  *QuadNode
+	BottomRight *QuadNode
+}
 
-func construct(grid [][]int) *Node {
-	leafNodes := map[int]*Node{
+func construct(grid [][]int) *QuadNode {
+	leafNodes := map[int]*QuadNode{
 		0: {Val: false, IsLeaf: true},
 		1: {Val: true, IsLeaf: true},
 	}
 
-	var dfs func(n, r, c int) *Node
-	dfs = func(n, r, c int) *Node {
+	var dfs func(n, r, c int) *QuadNode
+	dfs = func(n, r, c int) *QuadNode {
 		if n == 1 {
 			return leafNodes[grid[r][c]]
 		}
@@ -34,8 +31,9 @@ func construct(grid [][]int) *Node {
 			return topLeft
 		}
 
-		return &Node{Val: false, IsLeaf: false, TopLeft: topLeft, TopRight: topRight, BottomLeft: bottomLeft, BottomRight: bottomRight}
+		return &QuadNode{Val: false, IsLeaf: false, TopLeft: topLeft, TopRight: topRight, BottomLeft: bottomLeft, BottomRight: bottomRight}
 	}
 
 	return dfs(len(grid), 0, 0)
 }
+
