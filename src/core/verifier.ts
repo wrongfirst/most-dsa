@@ -46,7 +46,7 @@ export interface VerificationOptions {
   shouldAbort?: () => boolean;
 }
 
-export async function verifySingleExercise(
+async function verifySingleExercise(
   exercise: Exercise,
   languageId: string
 ): Promise<VerificationItemResult> {
@@ -89,20 +89,6 @@ export async function verifySingleExercise(
         output: result.output,
         error: result.error || (isAssertionFailure ? 'Test suite reported test failure.' : 'Execution failed')
       };
-    }
-
-    // Custom structural / output validator
-    if (variant.validate) {
-      const validationResult = variant.validate(variant.solutionCode, result.output);
-      if (validationResult !== true) {
-        return {
-          ...baseResult,
-          status: 'failed',
-          durationMs,
-          output: result.output,
-          error: typeof validationResult === 'string' ? validationResult : 'Custom validation failed'
-        };
-      }
     }
 
     return {

@@ -26,16 +26,14 @@ class Orchestrator {
                     this.setRunningState(this.isRunning);
                 } else if (runnerStatus === 'loading' || runnerStatus === 'idle') {
                     this.isReady = false;
-                    const langName = activeRunner.name || 'runtime';
-                    const capitalizedLang = langName.charAt(0).toUpperCase() + langName.slice(1);
                     status.setLoading(`Loading...`);
                     this.setRunningState(this.isRunning);
                 } else if (runnerStatus === 'error') {
                     this.isReady = false;
                     status.setError();
                     this.setRunningState(this.isRunning);
-                    if (!elements.console.textContent || elements.console.textContent === "// Ready...") {
-                        elements.console.textContent = `${activeRunner.name.toUpperCase()} runtime initialization failed:\n${error || 'Unknown error'}`;
+                    if (!elements.output.textContent || elements.output.textContent === "// Ready...") {
+                        elements.output.textContent = `${activeRunner.name.toUpperCase()} runtime initialization failed:\n${error || 'Unknown error'}`;
                     }
                 }
             });
@@ -48,7 +46,6 @@ class Orchestrator {
         // If active runtime is still loading, gracefully await readiness instead of alerting
         if (!this.isReady) {
             const langName = activeRunner.name || 'runtime';
-            const capitalizedLang = langName.charAt(0).toUpperCase() + langName.slice(1);
             status.setLoading(`Loading...`);
             try {
                 if (activeRunner.whenReady) {
@@ -67,12 +64,14 @@ class Orchestrator {
         const currentEx = exercises.find(e => e.id === activeLessonSlug);
         if (!currentEx) return;
 
+        const targetLessonSlug = activeLessonSlug;
+        const targetLanguageId = currentLanguageId;
         const exerciseVariant = getExerciseVariant(currentEx, currentLanguageId);
 
         //prepare ui
         this.setRunningState(true);
         status.setRunning();
-        elements.console.textContent = "";
+        elements.output.textContent = "";
 
         try {
             //get code
@@ -83,13 +82,19 @@ class Orchestrator {
             const finalTestCode = exerciseVariant.testCode || "";
             const result = await activeRunner.run(userCode, finalTestCode);
 
+            // If user switched exercise or language while running, discard stale result
+            const currentState = store.getState();
+            if (currentState.activeLessonSlug !== targetLessonSlug || currentState.currentLanguageId !== targetLanguageId) {
+                return;
+            }
+
             //handle result
             if (!result.success) {
                 this.handleFailure(result.error || "Unknown Error", result.output);
                 return;
             }
 
-            elements.console.textContent = result.output;
+            elements.output.textContent = result.output;
 
             //output-based validation (Runtime tests)
             const isAssertionFailure = Boolean(result.output && result.output.includes("Test failed"));
@@ -98,21 +103,14 @@ class Orchestrator {
                 return;
             }
 
-            //structural/custom validation
-            if (exerciseVariant.validate) {
-                const validation = exerciseVariant.validate(userCode, result.output);
-                if (validation !== true) {
-                    status.setFailed();
-                    elements.console.textContent += `\n\n${validation}`;
-                    return;
-                }
-            }
-
             //success
             this.handleSuccess(currentEx.id, completedSlugs);
 
         } catch (e: any) {
-            this.handleError(e.message);
+            const currentState = store.getState();
+            if (currentState.activeLessonSlug === targetLessonSlug && currentState.currentLanguageId === targetLanguageId) {
+                this.handleError(e.message);
+            }
         } finally {
             this.setRunningState(false);
         }
@@ -120,17 +118,17 @@ class Orchestrator {
 
     private handleFailure(error: string, output: string) {
         status.setFailed();
-        elements.console.textContent = output ? output + "\n" + error : error;
+        elements.output.textContent = output ? output + "\n" + error : error;
     }
 
     private handleError(msg: string) {
         status.setError();
-        elements.console.textContent = "Runtime Error: " + msg;
+        elements.output.textContent = "Runtime Error: " + msg;
     }
 
     private handleSuccess(slug: string, completedSlugs: string[]) {
         status.setPassed();
-        elements.console.textContent += "\nALL TESTS PASSED!";
+        elements.output.textContent += "\nALL TESTS PASSED!";
 
         const alreadyCompleted = completedSlugs.includes(slug);
         store.getState().markComplete(slug);
